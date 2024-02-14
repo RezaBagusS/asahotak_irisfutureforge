@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
+import MainKonten from "./helpers/MainKonten";
 
-const inter = Inter({ subsets: ["latin"] });
+const Nunito = Nunito_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,9 +15,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${Nunito.className} cust-outer-container bg-[#FAFAFA] text-custBlack flex overflow-y-auto`}>
+        <MainKonten>
+          {children}
+        </MainKonten>        
+      </body>
     </html>
   );
 }

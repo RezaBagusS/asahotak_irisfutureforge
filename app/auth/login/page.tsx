@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import AOlogo from "../assets/AO.png";
-import AOBlue from "../assets/AOBlue.png";
-import bottomLogo from "../assets/buttomLogo.png";
-import CustInput from "../components/custInput";
-import CustButton from "../components/custButton";
+import AOlogo from "../../assets/AO.png";
+import AOBlue from "../../assets/AOBlue.png";
+import bottomLogo from "../../assets/buttomLogo.png";
+import CustInput from "../../components/atoms/custInput";
+import CustButton from "../../components/atoms/custButton";
 import { useState } from "react";
 
 function Login() {
@@ -27,7 +27,7 @@ function Login() {
       <div className="w-full lg:w-5/12 bg-white text-black flex flex-col justify-center">
         <div className="w-9/12 flex flex-col gap-10 mx-auto font-nunitoSans">
           <div className="flex lg:hidden justify-center">
-            <Image src={AOBlue} alt="AOLogo" height={60} />
+            <Image src={AOBlue} alt="AOLogo" priority height={60} />
           </div>
           <div className="flex flex-col items-center lg:items-start gap-3">
             <h1 className="text-4xl md:text-6xl font-semibold md:font-medium">

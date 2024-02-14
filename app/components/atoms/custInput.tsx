@@ -1,5 +1,5 @@
-import { CustInputProps } from "../types";
-import hidePassword from "../assets/icons/hidePassword.svg";
+import { CustInputProps } from "../../types";
+import hidePassword from "@/app/assets/icons/hidePassword.svg";
 import Image from "next/image";
 
 const CustInput = ({
