@@ -1,9 +1,11 @@
-import { title } from "process";
+"use client";
+
 import CustBanner from "../components/atoms/custBanner";
 import CustCardBoard from "../components/atoms/custCardBoard";
 import SearchField from "../components/molecules/searchField";
 import profileIcon from "../assets/icons/profileIcon.svg";
 import CustCardMyCourses from "../components/atoms/custCardMyCourses";
+import { useEffect, useRef } from "react";
 
 const dataBoard = [
   {
@@ -58,6 +60,41 @@ const dataMyCourse = [
 interface DashboardPageProps {}
 
 export default function DashboardPage({}: DashboardPageProps) {
+  const cardBoxRef = useRef<HTMLDivElement>(null);
+  const isDraggingRef = useRef(false);
+
+  const startDrag = (e: any) => {
+    isDraggingRef.current = true;
+  };
+
+  const endDrag = () => {
+    isDraggingRef.current = false;
+  };
+
+  const dragCard = (e: any) => {
+    if (isDraggingRef.current && cardBoxRef.current) {
+      cardBoxRef.current.scrollLeft -= e.movementX;
+    }
+  };
+
+  useEffect(() => {
+    const cardBox = cardBoxRef.current;
+
+    if (cardBox) {
+      cardBox.addEventListener("mousedown", startDrag);
+      cardBox.addEventListener("mouseup", endDrag);
+      cardBox.addEventListener("mousemove", dragCard);
+    }
+
+    return () => {
+      if (cardBox) {
+        cardBox.removeEventListener("mousedown", startDrag);
+        cardBox.removeEventListener("mouseup", endDrag);
+        cardBox.removeEventListener("mousemove", dragCard);
+      }
+    };
+  }, []);
+
   return (
     <div className="flex flex-col gap-5">
       <SearchField />
@@ -74,13 +111,25 @@ export default function DashboardPage({}: DashboardPageProps) {
             <h2 className="text-custPrimary font-bold text-3xl">My Course</h2>
             <p className="text-custPrimary text-sm cursor-pointer">See all</p>
           </div>
-          <div className="w-auto overflow-x-auto flex gap-7 py-4">
-            {
-              dataMyCourse.map((item, index) => {
+          <div className="flex w-full relative">
+            <span className="absolute h-full z-20 left-0 px-4 bg-gradient-to-r from-custWhite"></span>
+            <div
+              ref={cardBoxRef}
+              className="w-auto overflow-x-auto scrollbar-thin flex gap-7 py-4 ps-3"
+            >
+              {dataMyCourse.map((item, index) => {
                 const { title, desc, profile } = item;
-                return <CustCardMyCourses title={title} desc={desc} profile={profile} key={index} />;
-              })
-            }
+                return (
+                  <CustCardMyCourses
+                    title={title}
+                    desc={desc}
+                    profile={profile}
+                    key={index}
+                  />
+                );
+              })}
+            </div>
+            <span className="absolute h-full z-20 right-0 px-4 bg-gradient-to-l from-custWhite"></span>
           </div>
         </div>
       </div>

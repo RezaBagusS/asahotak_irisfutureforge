@@ -11,7 +11,7 @@ const CustBanner = () => {
           start your learning today.
         </p>
       </div>
-      <Image className="absolute -right-2 -bottom-20" src={bubble} alt="BubbleIcon" width={250} />
+      <Image className="absolute -right-2 -bottom-20" priority src={bubble} alt="BubbleIcon" width={250} />
     </div>
   );
 };
