@@ -3,15 +3,15 @@ import bubble from "../../assets/icons/Bubble.svg"
 
 const CustBanner = () => {
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-custPrimary text-[#EDE6F3] flex items-center px-9 h-44">
-      <div className="flex flex-col gap-3 justify-center items-start w-7/12">
-        <h1 className="font-medium text-2xl">Hi, Rehan!</h1>
-        <p className="font-normal text-sm">
+    <div className="relative overflow-hidden rounded-3xl bg-custPrimary text-[#EDE6F3] flex items-center px-5 sm:px-9 h-44">
+      <div className="flex flex-col gap-3 z-20 justify-center items-start w-full sm:w-7/12">
+        <h1 className="font-medium text-xl sm:text-2xl">Hi, Rehan!</h1>
+        <p className="font-normal text-xs sm:text-sm">
           Achieve your future with learning something new everyday. And now,
           start your learning today.
         </p>
       </div>
-      <Image className="absolute -right-2 -bottom-20" priority src={bubble} alt="BubbleIcon" width={250} />
+      <Image className="absolute z-10 -right-20 sm:-right-2 -bottom-20 opacity-30 sm:opacity-100" priority src={bubble} alt="BubbleIcon" width={250} />
     </div>
   );
 };

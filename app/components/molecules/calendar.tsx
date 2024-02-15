@@ -96,7 +96,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className="bg-white rounded-md text-custBlack flex flex-col gap-5 p-5 w-full">
+    <div className="bg-white rounded-md text-custBlack flex flex-col gap-5 p-5 w-full max-h-72">
       <div className="flex justify-between items-center">
         <h1 className="font-semibold text-base">
           {arrMonth[today.month()]}, {today.year()}

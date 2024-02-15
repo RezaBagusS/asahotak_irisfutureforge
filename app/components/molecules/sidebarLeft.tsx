@@ -81,7 +81,7 @@ const SidebarLeft = () => {
       initial={{ opacity: 0, x: -70 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 1.2, type: "tween" }}
-      className="w-2/12 bg-white py-20 px-6 h-screen"
+      className="w-full md:w-[25%] lg:w-3/12 xl:w-2/12 hidden md:flex flex-col bg-white py-20 px-6 h-screen"
     >
       <div className="flex justify-center">
         <Image src={AOBlue} priority alt="AOLogo" height={40} />

@@ -2,10 +2,11 @@
 
 import CustBanner from "../components/atoms/custBanner";
 import CustCardBoard from "../components/atoms/custCardBoard";
-import SearchField from "../components/molecules/searchField";
 import profileIcon from "../assets/icons/profileIcon.svg";
 import CustCardMyCourses from "../components/atoms/custCardMyCourses";
 import { useEffect, useRef } from "react";
+import MobileViewDashboard from "../components/molecules/mobileViewDashboard";
+import HeaderDashboard from "../components/molecules/headerDashboard";
 
 const dataBoard = [
   {
@@ -97,10 +98,11 @@ export default function DashboardPage({}: DashboardPageProps) {
 
   return (
     <div className="flex flex-col gap-5">
-      <SearchField />
-      <div className="flex flex-col gap-14">
+      <HeaderDashboard />
+      <div className="flex flex-col gap-8 sm:gap-14">
         <CustBanner />
-        <div className="flex gap-7">
+        <MobileViewDashboard />
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-7">
           {dataBoard.map((item, index) => {
             const { title, score } = item;
             return <CustCardBoard title={title} score={score} key={index} />;
@@ -108,7 +110,7 @@ export default function DashboardPage({}: DashboardPageProps) {
         </div>
         <div className="py-5">
           <div className="flex justify-between items-end">
-            <h2 className="text-custPrimary font-bold text-3xl">My Course</h2>
+            <h2 className="text-custPrimary font-bold text-2xl sm:text-3xl">My Course</h2>
             <p className="text-custPrimary text-sm cursor-pointer">See all</p>
           </div>
           <div className="flex w-full relative">
