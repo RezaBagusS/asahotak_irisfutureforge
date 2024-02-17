@@ -6,7 +6,7 @@ const HeaderDashboard = () => {
   return (
     <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-10">
-            <div className="flex sm:hidden">
+            <div className="flex md:hidden">
                 <CustButtonMenuMobile />
             </div>
             <div className="hidden sm:flex sm:w-full">

@@ -15,13 +15,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
-      <body className={`${Nunito.className} cust-outer-container bg-[#FAFAFA] text-custBlack flex overflow-y-auto overflow-x-hidden`}>
-        <MainKonten>
-          {children}
-        </MainKonten>        
+      <body
+        className={`${Nunito.className} cust-outer-container bg-[#FAFAFA] text-custBlack flex overflow-y-auto overflow-x-hidden`}
+      >
+          <MainKonten>{children}</MainKonten>
       </body>
     </html>
   );
