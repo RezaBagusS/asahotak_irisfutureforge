@@ -10,6 +10,8 @@ import CustListModule from "../atoms/custListModule";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import CustButtonMenuMobile from "../atoms/custButtonMenuMobile";
+import { useSelector } from "react-redux";
 
 const dataModule = [
   {
@@ -32,6 +34,7 @@ const dataModule = [
 
 const SidebarLeft = () => {
   const pathname = usePathname();
+  const show = useSelector((state: any) => state.menuMobile.data.show);
 
   useEffect(() => {
     console.log(pathname);
@@ -77,14 +80,16 @@ const SidebarLeft = () => {
   };
 
   return (
-    <motion.aside
-      initial={{ opacity: 0, x: -70 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 1.2, type: "tween" }}
-      className="w-full md:w-[25%] lg:w-3/12 xl:w-2/12 hidden md:flex flex-col bg-white py-20 px-6 h-screen"
+    <aside
+      className={`w-full md:w-[25%] lg:w-3/12 xl:w-2/12 absolute md:relative z-50 md:z-0 md:flex flex-col bg-white pt-12 md:pt-16 lg:pt-20 pb-14 px-6 h-screen
+        ${show ? "left-0" : "-left-full md:left-0"} transition-all duration-300
+      `}
     >
-      <div className="flex justify-center">
+      <div className="relative flex justify-center">
         <Image src={AOBlue} priority alt="AOLogo" height={40} />
+        <div className="absolute md:hidden right-0 top-1/2 -translate-y-1/2">
+          <CustButtonMenuMobile />
+        </div>
       </div>
       <div className="flex flex-col gap-3 mt-10">
         {dataModule.map((item, index) => {
@@ -99,7 +104,7 @@ const SidebarLeft = () => {
           );
         })}
       </div>
-    </motion.aside>
+    </aside>
   );
 };
 

@@ -1,15 +1,28 @@
-import { useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setToggleMenu } from "@/app/redux/slices/reduxMenuMobileSlices";
+import { useMediaQuery } from "react-responsive";
+import { useEffect } from "react";
 
 const CustButtonMenuMobile = () => {
     
-    const [openSideBar, setOpenSideBar] = useState<Boolean>(false);
+    const dispatch = useDispatch();
+    const show = useSelector((state: any) => state.menuMobile.data.show);
+
+    const isMdOrAbove = useMediaQuery({ minWidth: 768 });
+
+    useEffect(() => {
+        if (isMdOrAbove) {
+            dispatch(setToggleMenu({ show: false }));
+        }
+    }, []);
 
     const handleClickMenu = () => {
-        setOpenSideBar(prev => !prev);
+        dispatch(setToggleMenu({ show: !show }));
     }
 
     const OpenSideBarStyles = (position : string) => {
-        if (openSideBar) {
+        if (show) {
           switch (position) {
             case "top":
               return 'p-0.5 w-full rounded-sm bg-custPrimary transform transition-all duration-300 rotate-45 translate-y-full';

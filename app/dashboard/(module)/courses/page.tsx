@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPopup } from "@/app/redux/slices/reduxPopUpSlices";
 import { useRouter } from "next/navigation";
+import SearchField from "@/app/components/molecules/searchField";
 
 interface PageProps {}
 
@@ -31,8 +32,8 @@ export default function Page({}: PageProps) {
 //   }, []);
 
   return (
-    <div>
-        PageCourse
+    <div className="w-full relative">
+      <SearchField />
     </div>
   );
 }

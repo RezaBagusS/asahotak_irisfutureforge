@@ -1,7 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import DashboardIcon from "@/app/assets/icons/DashboardIcon";
 import { ListModuleProps } from "../../types";
+import { useDispatch } from "react-redux";
+import { setToggleMenu } from "@/app/redux/slices/reduxMenuMobileSlices";
 
 const CustListModule = ({
   title = "dashboard",
@@ -10,9 +11,16 @@ const CustListModule = ({
   isActive = false,
 }: ListModuleProps) => {
 
+  const dispatch = useDispatch();
+
+  const handleClickModule = () => {
+    dispatch(setToggleMenu({ show: false }));
+  }
+
   return (
     <Link
       href={link}
+      onClick={handleClickModule}
       className={`${
         isActive
           ? "bg-custPrimary text-custWhite hover:bg-opacity-80"

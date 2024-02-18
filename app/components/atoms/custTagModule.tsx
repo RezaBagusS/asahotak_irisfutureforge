@@ -5,7 +5,7 @@ interface CustTagModuleProps {
 
 const CustTagModule = ({ text, desc }: CustTagModuleProps) => {
   return (
-    <div className="pb-3 border-b">
+    <div className="pb-3 w-full border-b">
       <span className="text-4xl font-semibold text-custPrimary">{text}</span>
       <p className="text-custBlack/70">{desc}</p>
     </div>

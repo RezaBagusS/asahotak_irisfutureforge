@@ -4,12 +4,14 @@ import { configureStore } from "@reduxjs/toolkit";
 // import messageReducer from "./slices/reduxMessageSlice";
 // import dataWisataReducer from "./slices/reduxDataWisataSlice";
 import popupReducer from "./slices/reduxPopUpSlices";
+import menuMobileReduces from "./slices/reduxMenuMobileSlices";
 // import popupUploadReducer from "./slices/reduxPopupUploadSlice";
 // import popupFunctionsMiddleware from "./middlewares/popupFunctionsMiddleware";
 
 const store = configureStore({
     reducer: {
         popup: popupReducer,
+        menuMobile: menuMobileReduces,
         // popupUpload: popupUploadReducer,
         // loading: loadingReducer,
         // idClient: idClientReducer,

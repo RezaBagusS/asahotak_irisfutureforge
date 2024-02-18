@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import CustErrorField from "../components/atoms/custErrorField";
+import CustButtonMenuMobile from "../components/atoms/custButtonMenuMobile";
 
 interface PageProps {}
 
@@ -35,10 +36,15 @@ export default function Page({}: PageProps) {
 
   return (
     <div className="w-full relative">
-      <CustTagModule
-        text="Setting"
-        desc="This is how others will see you on the site."
-      />
+      <div className="flex items-center gap-5">
+        <div className="flex md:hidden">
+          <CustButtonMenuMobile />
+        </div>
+        <CustTagModule
+          text="Setting"
+          desc="This is how others will see you on the site."
+        />
+      </div>
       <form
         className="pt-6 flex flex-col gap-5"
         onSubmit={handleSubmit(onSubmit)}
