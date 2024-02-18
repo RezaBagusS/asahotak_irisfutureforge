@@ -12,23 +12,23 @@ export default function Page({}: PageProps) {
   const dispatch = useDispatch();
   const show = useSelector((state: any) => state.popup.data.show);
 
-  useEffect(() => {
+//   useEffect(() => {
 
-    setTimeout(() => {
-      dispatch(
-        setPopup({
-          show: true,
-            type: "success",
-            title: "Success!",
-            message: "Congratulations your account has been successfully created",
-            onConfirm: () => {
-                dispatch(setPopup({ show: false }));
-            }
-        })
-      );
+//     setTimeout(() => {
+//       dispatch(
+//         setPopup({
+//           show: true,
+//             type: "success",
+//             title: "Success!",
+//             message: "Congratulations your account has been successfully created",
+//             onConfirm: () => {
+//                 dispatch(setPopup({ show: false }));
+//             }
+//         })
+//       );
 
-    }, 100);
-  }, []);
+//     }, 100);
+//   }, []);
 
   return (
     <div>

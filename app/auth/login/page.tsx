@@ -20,7 +20,7 @@ function Login() {
       <div className="relative hidden lg:w-7/12 bg-custPrimary lg:flex justify-center items-center">
         <Image src={AOlogo} alt="AOLogo" height={120} />
         <div className="flex flex-col items-center gap-3 absolute bottom-7">
-          <h3>Supported By:</h3>
+          <h3 className="text-custWhite">Supported By:</h3>
           <Image src={bottomLogo} alt="bottomLogo" height={40} />
         </div>
       </div>
