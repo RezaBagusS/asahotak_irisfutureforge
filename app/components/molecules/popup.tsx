@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { motion } from "framer-motion";
 import failure from "../../assets/icons/failure.svg";
@@ -13,7 +13,7 @@ import Image from "next/image";
 // Success(Message, oke, func oke) - icon check
 
 const Popup = () => {
-  const dataPopup = useSelector((state:any) => state.popup.data);
+  const dataPopup = useSelector((state: any) => state.popup.data);
 
   const handleCancel = () => {
     if (dataPopup.onCancel) {
@@ -74,20 +74,20 @@ const Popup = () => {
             <HandleImage />
           </div>
           <div className="flex flex-col items-center gap-1">
-          <h2
-            className={`font-bold text-3xl text-[#525252] ${
-              dataPopup.type == "loading" && "animate-pulse"
-            }`}
-          >
-            {dataPopup.title}
-          </h2>
-          <p
-            className={`font-medium text-lg w-10/12 md:w-7/12 text-[#949494] leading-5 text-center ${
-              dataPopup.type == "loading" && "animate-pulse"
-            }`}
-          >
-            {dataPopup.message}
-          </p>
+            <h2
+              className={`font-bold text-3xl text-[#525252] ${
+                dataPopup.type == "loading" && "animate-pulse"
+              }`}
+            >
+              {dataPopup.title}
+            </h2>
+            <p
+              className={`font-medium text-lg text-[#949494] leading-5 text-center ${
+                dataPopup.type == "loading" && "animate-pulse"
+              }`}
+            >
+              {dataPopup.message}
+            </p>
           </div>
 
           {/* CONFIRM BUTTON */}

@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import CustErrorField from "../components/atoms/custErrorField";
 import CustButtonMenuMobile from "../components/atoms/custButtonMenuMobile";
+import FooterModule from "../components/molecules/footerModule";
 
 interface PageProps {}
 
@@ -90,6 +91,9 @@ export default function Page({}: PageProps) {
           Save Changes
         </button>
       </form>
+      <div className="mt-5">
+        <FooterModule />
+      </div>
     </div>
   );
 }

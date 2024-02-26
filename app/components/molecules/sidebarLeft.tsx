@@ -47,7 +47,7 @@ const SidebarLeft = () => {
           <DashboardIcon
             height={20}
             width={20}
-            fill={pathname === link ? "white" : "black"}
+            fill={pathname == "/dashboard" ? "white" : "black"}
           />
         );
       case "Course":
@@ -55,7 +55,7 @@ const SidebarLeft = () => {
           <CourseIcon
             height={20}
             width={20}
-            fill={pathname === link ? "white" : "black"}
+            fill={pathname == "/dashboard" ? "black" : pathname.includes(link) ? "white" : "black"}
           />
         );
       case "Tryout":
@@ -63,7 +63,7 @@ const SidebarLeft = () => {
           <TryoutIcon
             height={20}
             width={20}
-            fill={pathname === link ? "white" : "black"}
+            fill={pathname == "/dashboard" ? "black" : pathname.includes(link) ? "white" : "black"}
           />
         );
       case "Setting":
@@ -71,7 +71,7 @@ const SidebarLeft = () => {
           <SettingIcon
             height={20}
             width={20}
-            fill={pathname === link ? "white" : "black"}
+            fill={pathname == "/dashboard" ? "black" : pathname.includes(link) ? "white" : "black"}
           />
         );
       default:
@@ -99,7 +99,9 @@ const SidebarLeft = () => {
               title={item.title}
               icon={handleIcon(item.title, item.link)}
               link={item.link}
-              isActive={pathname === item.link}
+              isActive={
+                item.link == "/dashboard" ? pathname == item.link : pathname.includes(item.link)
+              }
             />
           );
         })}

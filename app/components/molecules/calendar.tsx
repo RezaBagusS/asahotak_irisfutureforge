@@ -2,11 +2,11 @@
 
 import dayjs from "dayjs";
 import formatDate from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import chevron from "../../assets/icons/chevron.svg";
 import Image from "next/image";
 
-const arrMonth = [
+const arrMonth:string[] = [
   "January",
   "February",
   "March",
