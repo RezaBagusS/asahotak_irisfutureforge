@@ -7,6 +7,8 @@ import CustCardMyCourses from "../components/atoms/custCardMyCourses";
 import { useEffect, useRef } from "react";
 import MobileViewDashboard from "../components/molecules/mobileViewDashboard";
 import HeaderDashboard from "../components/molecules/headerDashboard";
+import { useDispatch } from "react-redux";
+import { setPopup } from "../redux/slices/reduxPopUpSlices";
 
 const dataBoard = [
   {
@@ -79,6 +81,7 @@ export default function DashboardPage({}: DashboardPageProps) {
   };
 
   useEffect(() => {
+
     const cardBox = cardBoxRef.current;
 
     if (cardBox) {

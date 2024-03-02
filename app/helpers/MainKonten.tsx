@@ -3,7 +3,7 @@
 import { FC } from "react";
 import SidebarLeft from "../components/molecules/sidebarLeft";
 import SidebarRight from "../components/molecules/sidebarRight";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 import Popup from "../components/molecules/popup";
@@ -15,11 +15,15 @@ interface MainKontenProps {
 
 export default function MainKonten<FC>({ children }: MainKontenProps) {
   const location = usePathname();
+  const route = useRouter();
 
   const exclude = ["/", "/auth/login"];
 
   if (exclude.includes(location)) {
-    return <>{children}</>;
+    return <Provider store={store}>
+      <Popup />
+      {children}
+    </Provider>;
   }
 
   return (
