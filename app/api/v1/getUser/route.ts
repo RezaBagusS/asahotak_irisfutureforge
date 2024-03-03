@@ -7,53 +7,53 @@ export async function GET(request: Request) {
   return NextResponse.json({ message: 'Hello World' })
 }
 
-// export async function POST(request: Request) {
+export async function POST(request: Request) {
 
-//   const data = await request.json();
+  const data = await request.json();
 
-//   const { email, password } = data;
+  const { email, password } = data;
   
-//   const results = await prisma.user.findMany({
-//     select: {
-//       id: true,
-//       username: true,
-//       email: true,
-//     },
-//     where: {
-//       email: email,
-//       password: password
-//     }
-//   })
+  const results = await prisma.user.findMany({
+    select: {
+      id: true,
+      username: true,
+      email: true,
+    },
+    where: {
+      email: email,
+      password: password
+    }
+  })
   
-//   console.log("Results : ", results);
+  console.log("Results : ", results);
 
-//   if (!results) {
-//     return NextResponse.json({
-//       error: true,
-//       message: 'Authentication failed. Please try again.'
-//     },{ status: 500 })
-//   }
+  if (!results) {
+    return NextResponse.json({
+      error: true,
+      message: 'Authentication failed. Please try again.'
+    },{ status: 500 })
+  }
 
-//   if (results.length === 0) {
-//     return NextResponse.json({ 
-//       error: true,
-//       message: 'User not found.'
-//      }, { status: 404 })
-//   }
+  if (results.length === 0) {
+    return NextResponse.json({ 
+      error: true,
+      message: 'User not found.'
+     }, { status: 404 })
+  }
 
-//   const payload = {
-//     id: results[0].id,
-//     username: results[0].username,
-//     email: results[0].email,
-//   };
+  const payload = {
+    id: results[0].id,
+    username: results[0].username,
+    email: results[0].email,
+  };
 
-//   const accessToken = generateAccessToken(payload);
+  const accessToken = generateAccessToken(payload);
 
-//   return NextResponse.json({
-//     payload,
-//     accessToken,
-//     message: 'User Found'
-//   },{ status: 200 })
+  return NextResponse.json({
+    payload,
+    accessToken,
+    message: 'User Found'
+  },{ status: 200 })
 
   // try {
   //   // const results: any = await queryDb({
