@@ -1,4 +1,4 @@
-// import { queryDb } from '../../../database/iniDb';
+import { queryDb } from '../../../database/iniDb';
 import { NextResponse } from 'next/server'
 import { generateAccessToken } from "@/app/helpers/jwt";
 import prisma from '@/app/libs/prisma';
@@ -6,7 +6,11 @@ import prisma from '@/app/libs/prisma';
 export async function GET(request: Request) {
 
   try {
-    const data = await prisma.user.findMany();
+    // const data = await prisma.user.findMany();
+
+    const data: any = await queryDb({
+      query: `SELECT * FROM user`,
+    });
   
     return NextResponse.json({ 
       message: 'Hello World',
