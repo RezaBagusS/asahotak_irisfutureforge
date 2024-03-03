@@ -7,8 +7,10 @@ export async function GET(request: Request) {
 
   const data = await prisma.user.findMany();
 
-  return NextResponse.json({ message: 'Hello World',
-data: data },{ status: 200})
+  return NextResponse.json({ 
+    message: 'Hello World',
+    data: data 
+  })
 }
 
 export async function POST(request: Request) {
