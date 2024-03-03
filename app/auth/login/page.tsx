@@ -6,9 +6,9 @@ import prisma from "@/app/libs/prisma";
 
 async function Login() {
 
-  const user = await prisma.user.findMany();
+  // const user = await prisma.user.findMany();
 
-  console.log("User : ", user);
+  // console.log("User : ", user);
 
   return (
     <div className="cust-outer-container w-full flex h-screen">
