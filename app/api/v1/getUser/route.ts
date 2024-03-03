@@ -4,7 +4,11 @@ import { generateAccessToken } from "@/app/helpers/jwt";
 import prisma from '@/app/libs/prisma';
 
 export async function GET(request: Request) {
-  return NextResponse.json({ message: 'Hello World' })
+
+  const data = await prisma.user.findMany();
+
+  return NextResponse.json({ message: 'Hello World',
+data: data },{ status: 200})
 }
 
 export async function POST(request: Request) {
