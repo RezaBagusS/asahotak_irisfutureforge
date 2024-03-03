@@ -16,6 +16,9 @@ export default function Page({ children }: PageProps) {
   const route = useRouter();
 
   useEffect(() => {
+
+    dispatch(setPopup({ show: false }));
+
     const getActiveUser = () => {
       const expirationTime = localStorage.getItem("asahOtak_EP728");
 
