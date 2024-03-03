@@ -9,50 +9,58 @@ export async function POST(request: Request) {
 
   const { email, password } = data;
   
-  try {
-    // const results: any = await queryDb({
-    //   query: `SELECT id, username, email, isInsentif, role FROM tb1_user WHERE email = '${email}' AND password = '${password}'`,
-    // });
-
-    const results = await prisma.user.findMany({
-      select: {
-        id: true,
-        username: true,
-        email: true,
-      },
-      where: {
-        email: email,
-        password: password
-      }
-    })
-
-    console.log("Results : ", results);
-
-    if (results.length === 0) {
-      return NextResponse.json({ 
-        error: true,
-        message: 'User not found.'
-       }, { status: 404 })
+  const results = await prisma.user.findMany({
+    select: {
+      id: true,
+      username: true,
+      email: true,
+    },
+    where: {
+      email: email,
+      password: password
     }
+  })
 
-    const payload = {
-      id: results[0].id,
-      username: results[0].username,
-      email: results[0].email,
-    };
+  console.log("Results : ", results);
 
-    const accessToken = generateAccessToken(payload);
-
+  if (!results) {
     return NextResponse.json({
-      payload,
-      accessToken,
-      message: 'User Found'
-    },{ status: 200 })
-
-  } catch (error) {
-    return NextResponse.json({ 
       error: true,
       message: 'Authentication failed. Please try again.'
-     }, { status: 500 })
+    },{ status: 500 })
   }
+
+  if (results.length === 0) {
+    return NextResponse.json({ 
+      error: true,
+      message: 'User not found.'
+     }, { status: 404 })
+  }
+
+  const payload = {
+    id: results[0].id,
+    username: results[0].username,
+    email: results[0].email,
+  };
+
+  const accessToken = generateAccessToken(payload);
+
+  return NextResponse.json({
+    payload,
+    accessToken,
+    message: 'User Found'
+  },{ status: 200 })
+
+  // try {
+  //   // const results: any = await queryDb({
+  //   //   query: `SELECT id, username, email, isInsentif, role FROM tb1_user WHERE email = '${email}' AND password = '${password}'`,
+  //   // });
+
+
+  // } catch (error) {
+  //   return NextResponse.json({ 
+  //     error: true,
+  //     message: 'Authentication failed. Please try again.'
+  //    }, { status: 500 })
+  // }
 }
