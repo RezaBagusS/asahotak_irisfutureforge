@@ -27,7 +27,7 @@ const CountDownBanner = ({ targetDate }: CountDownBannerProps) => {
 
         setCountDown(differenceInDay);
 
-    }, [targetDate, getToday]);
+    }, [targetDate]);
 
     return (
         <div className="w-full rounded-xl p-5 bg-custThird text-custWhite flex flex-col gap-3">
