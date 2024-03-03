@@ -16,7 +16,8 @@ export async function GET(request: Request) {
   } catch (error:any) {
     return NextResponse.json({
       error: true,
-      message: error.message
+      message: error.message,
+      db: process.env.DATABASE_URL
     },{ status: 500
     })
   }
