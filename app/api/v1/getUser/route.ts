@@ -1,6 +1,7 @@
-import { queryDb } from '../../../database/iniDb';
+// import { queryDb } from '../../../database/iniDb';
 import { NextResponse } from 'next/server'
 import { generateAccessToken } from "@/app/helpers/jwt";
+import prisma from '@/app/libs/prisma';
 
 export async function POST(request: Request) {
 
@@ -9,9 +10,21 @@ export async function POST(request: Request) {
   const { email, password } = data;
   
   try {
-    const results: any = await queryDb({
-      query: `SELECT id, username, email, isInsentif, role FROM tb1_user WHERE email = '${email}' AND password = '${password}'`,
-    });
+    // const results: any = await queryDb({
+    //   query: `SELECT id, username, email, isInsentif, role FROM tb1_user WHERE email = '${email}' AND password = '${password}'`,
+    // });
+
+    const results = await prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        email: true,
+      },
+      where: {
+        email: email,
+        password: password
+      }
+    })
 
     console.log("Results : ", results);
 
@@ -23,6 +36,7 @@ export async function POST(request: Request) {
     }
 
     const payload = {
+      id: results[0].id,
       username: results[0].username,
       email: results[0].email,
     };
