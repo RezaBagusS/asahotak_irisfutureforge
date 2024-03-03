@@ -5,12 +5,21 @@ import prisma from '@/app/libs/prisma';
 
 export async function GET(request: Request) {
 
-  const data = await prisma.user.findMany();
-
-  return NextResponse.json({ 
-    message: 'Hello World',
-    data: data 
-  })
+  try {
+    const data = await prisma.user.findMany();
+  
+    return NextResponse.json({ 
+      message: 'Hello World',
+      data: data 
+    })
+    
+  } catch (error:any) {
+    return NextResponse.json({
+      error: true,
+      message: error.message
+    },{ status: 500
+    })
+  }
 }
 
 export async function POST(request: Request) {
