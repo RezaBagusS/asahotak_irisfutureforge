@@ -6,11 +6,11 @@ import prisma from '@/app/libs/prisma';
 export async function GET(request: Request) {
 
   try {
-    // const data = await prisma.user.findMany();
+    const data = await prisma.user.findMany();
 
-    const data: any = await queryDb({
-      query: `SELECT * FROM user`,
-    });
+    // const data: any = await queryDb({
+    //   query: `SELECT * FROM user`,
+    // });
   
     return NextResponse.json({ 
       message: 'Hello World',
