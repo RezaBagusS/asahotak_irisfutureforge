@@ -9,6 +9,7 @@ const nextConfig = {
         DB_PASSWORD: process.env.DB_PASSWORD,
         DB_NAME: process.env.DB_NAME,
         SECRET_KEY: process.env.SECRET_KEY,
+        DATABASE_URL: process.env.DATABASE_URL,
     },
 };
 
