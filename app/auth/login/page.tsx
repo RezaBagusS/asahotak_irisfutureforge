@@ -2,8 +2,13 @@ import Image from "next/image";
 import AOlogo from "../../assets/AO.png";
 import bottomLogo from "../../assets/buttomLogo.png";
 import FormLogin from "@/app/components/molecules/formLogin";
+import prisma from "@/app/libs/prisma";
 
 async function Login() {
+
+  const user = await prisma.user.findMany();
+
+  console.log("User : ", user);
 
   return (
     <div className="cust-outer-container w-full flex h-screen">
