@@ -8,13 +8,13 @@ export async function GET(request: Request) {
   try {
     // const data = await prisma.user.findMany();
 
-    // const data: any = await queryDb({
-    //   query: `SELECT * FROM user`,
-    // });
+    const data: any = await queryDb({
+      query: `SELECT * FROM user`,
+    });
   
     return NextResponse.json({ 
       message: 'Hello World',
-      // data: data 
+      data: data 
     })
     
   } catch (error:any) {
