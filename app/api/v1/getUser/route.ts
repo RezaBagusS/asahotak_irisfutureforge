@@ -6,7 +6,7 @@ import prisma from '@/app/libs/prisma';
 export async function GET(request: Request) {
 
   try {
-    const data = await prisma.user.findMany();
+    // const data = await prisma.user.findMany();
 
     // const data: any = await queryDb({
     //   query: `SELECT * FROM user`,
@@ -14,7 +14,7 @@ export async function GET(request: Request) {
   
     return NextResponse.json({ 
       message: 'Hello World',
-      data: data 
+      // data: data 
     })
     
   } catch (error:any) {
