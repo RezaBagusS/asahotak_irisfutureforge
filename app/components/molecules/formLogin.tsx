@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import AOBlue from "../../assets/AOBlue.png";
+import AOBlue from "../../assets/AsahOtakBlue.webp";
 import CustInput from "../../components/atoms/custInput";
 import CustButton from "../../components/atoms/custButton";
 import CustErrorField from "../../components/atoms/custErrorField";
@@ -61,36 +61,36 @@ const FormLogin = () => {
     console.log("Res : ", res);
     
 
-    // if (res.error) {
-    //   dispatch(setPopup({
-    //     title: "Failed",
-    //     message: res.message || "Login Failed",
-    //     show: true,
-    //     type: "warning",
-    //     onConfirm: () => {
-    //       dispatch(setPopup({
-    //         show: false,
-    //       }));
-    //     }
-    //   }));
-    // } else {
-    //   setTimeout(() => {
-    //     setLocalStorage(res.data.payload, res.data.accessToken)
-    //     dispatch(setPopup({
-    //       title: "Success",
-    //       message: "Login Success",
-    //       show: true,
-    //       type: "success",
-    //       onConfirm: () => {
-    //         location.push("/dashboard");
-    //         dispatch(setPopup({
-    //           show: true,
-    //           message: "Redirecting to dashboard...",
-    //         }));
-    //       }
-    //     }));
-    //   }, 500);
-    // }
+    if (res.error) {
+      dispatch(setPopup({
+        title: "Failed",
+        message: res.message || "Login Failed",
+        show: true,
+        type: "warning",
+        onConfirm: () => {
+          dispatch(setPopup({
+            show: false,
+          }));
+        }
+      }));
+    } else {
+      setTimeout(() => {
+        setLocalStorage(res.data.payload, res.data.accessToken)
+        dispatch(setPopup({
+          title: "Success",
+          message: "Login Success",
+          show: true,
+          type: "success",
+          onConfirm: () => {
+            location.push("/dashboard");
+            dispatch(setPopup({
+              show: true,
+              message: "Redirecting to dashboard...",
+            }));
+          }
+        }));
+      }, 500);
+    }
   };
 
     return (

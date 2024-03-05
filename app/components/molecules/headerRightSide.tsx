@@ -5,6 +5,7 @@ import profile from "../../assets/defaultprofile.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setPopup } from "@/app/redux/slices/reduxPopUpSlices";
 import { useRouter } from "next/navigation";
+import CustBadgeUser from "@/app/components/atoms/custBadgeUser";
 
 interface HeaderProps {}
 
@@ -38,6 +39,7 @@ export default function HeaderRightSide<FC>({}: HeaderProps) {
 
   return (
     <div className="relative flex justify-end items-center gap-4">
+      <CustBadgeUser insentif={user.intensif} />
       <Image src={bell} alt="bell" width={30} height={30} />
       <div className="cursor-pointer">
         <Image

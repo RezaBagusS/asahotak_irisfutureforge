@@ -7,13 +7,9 @@ export async function GET(request: Request) {
 
   try {
     const data = await prisma.user.findMany();
-
-    // const data: any = await queryDb({
-    //   query: `SELECT * FROM user`,
-    // });
   
     return NextResponse.json({ 
-      message: 'Hello World',
+      message: 'ALL DATA USER',
       data: data 
     })
     
@@ -38,14 +34,13 @@ export async function POST(request: Request) {
       id: true,
       username: true,
       email: true,
+      intensif: true,
     },
     where: {
       email: email,
       password: password
     }
   })
-  
-  console.log("Results : ", results);
 
   if (!results) {
     return NextResponse.json({
@@ -57,7 +52,7 @@ export async function POST(request: Request) {
   if (results.length === 0) {
     return NextResponse.json({ 
       error: true,
-      message: 'User not found.'
+      message: 'User not found or password is incorrect. Please try again.'
      }, { status: 404 })
   }
 
@@ -74,17 +69,4 @@ export async function POST(request: Request) {
     accessToken,
     message: 'User Found'
   },{ status: 200 })
-
-  // try {
-  //   // const results: any = await queryDb({
-  //   //   query: `SELECT id, username, email, isInsentif, role FROM tb1_user WHERE email = '${email}' AND password = '${password}'`,
-  //   // });
-
-
-  // } catch (error) {
-  //   return NextResponse.json({ 
-  //     error: true,
-  //     message: 'Authentication failed. Please try again.'
-  //    }, { status: 500 })
-  // }
 }

@@ -25,9 +25,6 @@ export const loginHandler = async ({
     });
   
     const dataRes = await response.json();
-    console.log("Data Res : ", dataRes);
-    console.log("DATABASE_URL : ", process.env.DATABASE_URL);
-    
     
     return {
       error: dataRes.error || false,
