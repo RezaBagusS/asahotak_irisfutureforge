@@ -21,3 +21,4 @@ model User {
   intensif      Boolean  @default(false)
   createdAt     DateTime @default(now())
 }
+

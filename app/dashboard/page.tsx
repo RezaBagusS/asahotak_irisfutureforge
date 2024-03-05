@@ -13,15 +13,15 @@ import { setPopup } from "../redux/slices/reduxPopUpSlices";
 const dataBoard = [
   {
     title: "Your Score",
-    score: 825,
+    score: "Coming Soon",
   },
   {
     title: "Complete Try Out",
-    score: 2,
+    score: "Coming Soon",
   },
   {
     title: "Upcoming Try Out",
-    score: 1,
+    score: "Coming Soon",
   },
 ];
 

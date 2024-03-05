@@ -3,10 +3,13 @@ interface CustBadgeUserProps {
 }
 
 const CustBadgeUser = ({ insentif }: CustBadgeUserProps) => {
+
+    const badge = insentif ? "Intensif" : "Reguler";
+
     return (
         <div className="flex items-center">
-            <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-            <p className="text-sm font-semibold text-gray-700">User</p>
+            <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+            <p className="text-sm font-semibold text-gray-700">{badge}</p>
         </div>
     )
 }

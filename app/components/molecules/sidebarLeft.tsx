@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import AOBlue from "../../assets/AOBlue.png";
+import AOBlue from "../../assets/AsahOtakBlue.webp";
 import DashboardIcon from "@/app/assets/icons/DashboardIcon";
 import CourseIcon from "@/app/assets/icons/CourseIcon";
 import TryoutIcon from "@/app/assets/icons/TryoutIcon";
@@ -9,7 +9,6 @@ import SettingIcon from "@/app/assets/icons/SettingIcon";
 import CustListModule from "../atoms/custListModule";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
 import CustButtonMenuMobile from "../atoms/custButtonMenuMobile";
 import { useSelector } from "react-redux";
 
