@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const userDataSlice = createSlice({
+const userDataSlices = createSlice({
   name: "userData",
   initialState: {
     data: {
-        nama: "",
-        email: "",
+        id: 1,
+        username: '',
+        email: '',
+        isInsentif: 0,
+        getAccess: 0,
     },
   },
   reducers: {
@@ -15,5 +18,5 @@ const userDataSlice = createSlice({
   },
 });
 
-export const { setUserData } = userDataSlice.actions;
-export default userDataSlice.reducer;
+export const { setUserData } = userDataSlices.actions;
+export default userDataSlices.reducer;

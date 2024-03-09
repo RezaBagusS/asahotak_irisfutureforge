@@ -1,10 +1,13 @@
 interface CustBadgeUserProps {
-    insentif: boolean;
+    intensif: boolean;
 }
 
-const CustBadgeUser = ({ insentif }: CustBadgeUserProps) => {
+const CustBadgeUser = ({ intensif }: CustBadgeUserProps) => {
 
-    const badge = insentif ? "Intensif" : "Reguler";
+    let badge = '';
+    if (intensif != undefined) {
+        badge = intensif ? "Intensif" : "Reguler";
+    }
 
     return (
         <div className="flex items-center">

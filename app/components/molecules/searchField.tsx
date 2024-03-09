@@ -1,3 +1,5 @@
+'use client'
+
 import Image from "next/image";
 import search from "../../assets/icons/search.svg";
 import { useDispatch } from "react-redux";

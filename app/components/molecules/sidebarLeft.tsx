@@ -35,9 +35,9 @@ const SidebarLeft = () => {
   const pathname = usePathname();
   const show = useSelector((state: any) => state.menuMobile.data.show);
 
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
+  // useEffect(() => {
+  //   console.log(pathname);
+  // }, [pathname]);
 
   const handleIcon = (title: string, link: string) => {
     switch (title) {

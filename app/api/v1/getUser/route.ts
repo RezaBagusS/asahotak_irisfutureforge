@@ -1,4 +1,3 @@
-import { queryDb } from '../../../database/iniDb';
 import { NextResponse } from 'next/server'
 import { generateAccessToken } from "@/app/helpers/jwt";
 import prisma from '@/app/libs/prisma';
@@ -35,6 +34,7 @@ export async function POST(request: Request) {
       username: true,
       email: true,
       intensif: true,
+      getAccess: true
     },
     where: {
       email: email,
@@ -60,6 +60,8 @@ export async function POST(request: Request) {
     id: results[0].id,
     username: results[0].username,
     email: results[0].email,
+    intensif: results[0].intensif,
+    getAccess : results[0].getAccess
   };
 
   const accessToken = generateAccessToken(payload);

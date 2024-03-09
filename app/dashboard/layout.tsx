@@ -1,9 +1,8 @@
 "use client";
 
-import { getActiveUser } from "../helpers/localStorage";
 import { useDispatch } from "react-redux";
 import { setPopup } from "../redux/slices/reduxPopUpSlices";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { setUserData } from "../redux/slices/reduxUserDataSlices";
 
@@ -14,11 +13,9 @@ interface PageProps {
 export default function Page({ children }: PageProps) {
   const dispatch = useDispatch();
   const route = useRouter();
+  const location = usePathname();
 
   useEffect(() => {
-
-    dispatch(setPopup({ show: false }));
-
     const getActiveUser = () => {
       const expirationTime = localStorage.getItem("asahOtak_EP728");
 
@@ -31,40 +28,53 @@ export default function Page({ children }: PageProps) {
       return hasToken;
     };
 
-    !getActiveUser() &&
-      dispatch(
-        setPopup({
-          title: "Session Expired",
-          message: "Please login again",
-          show: true,
-          type: "warning",
-          onConfirm: () => route.push("/auth/login"),
-        })
-      );
-
-      const getUser = () => {
-        if (localStorage.getItem("asahOtak_TN903") == null) {
+    const getUser = () => {
+        try {
+          let decoded = atob(localStorage.getItem("asahOtak_UD348") || "");
+          return JSON.parse(decoded);
+        } catch (e) {
           return {};
-        } else if (
-          Date.now() >
-          parseInt(localStorage.getItem("asahOtak_EP728") || "0") * 1000
-        ) {
-          alert("Your session is expired. Please login again.");
-          localStorage.clear();
-          return {};
-        } else {
-          try {
-            let decoded = atob(localStorage.getItem("asahOtak_UD348") || "");
-            return JSON.parse(decoded);
-          } catch (e) {
-            return {};
-          }
         }
-      };
+    };
 
-      dispatch(setUserData(getUser()));
+    !getActiveUser()
+      ? 
+      dispatch(
+          setPopup({
+            title: "Session Expired",
+            message: "Please login again",
+            show: true,
+            type: "warning",
+            onConfirm: () => {
+              dispatch(setPopup({
+                title: "Loading",
+                message: "Redirect to Login Page . . .",
+                show: true, 
+                type: "loading" 
+              }));
+              setTimeout(() => {
+                dispatch(setPopup({ show: false }));
+                route.push("/");
+              }, 1000);
+            },
+          })
+        )
+      : dispatch(setPopup({ show: false })) && dispatch(setUserData(getUser()));
 
-  }, []);
+      location.includes("/tryout") &&
+    dispatch(
+      setPopup({
+        title: "On Development",
+        message: "This page is still on development, please come back later.",
+        show: true,
+        type: "warning",
+        onConfirm: () => {
+          dispatch(setPopup({ show: false }));
+          route.push("/dashboard");
+        },
+      })
+    );
+  }, [location]);
 
   return <div className="">{children}</div>;
 }

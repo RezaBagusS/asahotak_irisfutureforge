@@ -1,14 +1,14 @@
 "use client";
 
-import CustButton from "@/app/components/atoms/custButton";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setPopup } from "@/app/redux/slices/reduxPopUpSlices";
 import { useRouter } from "next/navigation";
 import ListMaterial from "@/app/components/molecules/listMaterial";
 import CustButtonMenuMobile from "@/app/components/atoms/custButtonMenuMobile";
 import FooterModule from "@/app/components/molecules/footerModule";
+import { getCourseBySlug } from "@/app/helpers/getCourse";
 
 interface PageProps {
   params: {
@@ -16,124 +16,80 @@ interface PageProps {
   };
 }
 
-interface stateDataCourse {
-  id: number;
-  title: string;
-  description: string;
-  percentage: number;
-  path: string;
+interface lesson {
+  id_lesson?: number;
+  title?: string;
+  codeLesson?: string;
+  link_ppt?: string | "";
+  link_video?: string | "";
+  link_quiz?: string | "";
+  openLesson?: boolean;
+  id_course?: number;
+  isDone?: boolean;
+  createdAt?: Date;
 }
 
-const dataCourses = [
-  {
-    id: 1,
-    title: "Pengetahuan Kuantitatif",
-    description:
-      "Pengenalan dan penerapan konsep-konsep dasar matematika dalam ilmu ekonomi",
-    percentage: 100,
-    path: "/dashboard/courses/pengetahuan-kuantitatif",
-  },
-  {
-    id: 2,
-    title: "Penalaran Umum",
-    description:
-      "Pengenalan dan penerapan konsep-konsep dasar matematika dalam ilmu ekonomi",
-    percentage: 80,
-    path: "/dashboard/courses/penalaran-umum",
-  },
-  {
-    id: 3,
-    title: "Penalaran Matematika",
-    description:
-      "Pengenalan dan penerapan konsep-konsep dasar matematika dalam ilmu ekonomi",
-    percentage: 40,
-    path: "/dashboard/courses/penalaran-matematika",
-  },
-  {
-    id: 4,
-    title: "Penalaran dan Pemahaman Umum",
-    description:
-      "Pengenalan dan penerapan konsep-konsep dasar matematika dalam ilmu ekonomi",
-    percentage: 0,
-    path: "/dashboard/courses/penalaran-dan-pemahaman-umum",
-  },
-  {
-    id: 5,
-    title: "Literasi Bahasa Inggris",
-    description:
-      "Pengenalan dan penerapan konsep-konsep dasar matematika dalam ilmu ekonomi",
-    percentage: 60,
-    path: "/dashboard/courses/literasi-bahasa-inggris",
-  },
-  {
-    id: 6,
-    title: "Literasi Bahasa Indonesia",
-    description:
-      "Pengenalan dan penerapan konsep-konsep dasar matematika dalam ilmu ekonomi",
-    percentage: 10,
-    path: "/dashboard/courses/literasi-bahasa-indonesia",
-  },
-  {
-    id: 7,
-    title: "Kemampuan Memahami Bacaan dan Menulis",
-    description:
-      "Pengenalan dan penerapan konsep-konsep dasar matematika dalam ilmu ekonomi",
-    percentage: 100,
-    path: "/dashboard/courses/kemampuan-memahami-bacaan-dan-menulis",
-  },
-];
+interface stateDataCourse {
+  title?: string;
+  description?: string;
+  codeCourse?: string;
+  countCourse?: number;
+  percentage?: number;
+  lesson?: lesson[];
+}
 
 const Page = ({ params }: PageProps) => {
-  const [data, setData] = useState<stateDataCourse>({
-    id: 1,
-    title: "",
-    description: "",
-    percentage: 100,
-    path: "",
-  });
+  const [data, setData] = useState<stateDataCourse>();
+  const { path } = params;
   const dispatch = useDispatch();
-  const location = useRouter();
+  const route = useRouter();
+  const userData = useSelector((state: any) => state.userData.data);
 
   useEffect(() => {
-    dispatch(
-      setPopup({
-        show: true,
-        type: "loading",
-        title: "Loading",
-        message: "Wait a moment . . .",
-      })
-    );
-
-    const getData = dataCourses.find((item) => {
-      return item.path === `/dashboard/courses/${params.path}`;
-    });
-
-    if (getData) {
-      setData(getData);
-      setTimeout(() => {
-        dispatch(
-          setPopup({
-            show: false,
-          })
-        );
-      }, 700);
-    } else {
+    if (userData.username != "") {
       dispatch(
         setPopup({
           show: true,
-          type: "warning",
-          title: "Not Found",
-          message: "Data not found",
-          onConfirm: () => {
-            dispatch(setPopup({ show: false }));
-            location.push("/dashboard/courses");
-          },
+          type: "loading",
+          title: "Loading",
+          message: "Wait a moment . . .",
         })
       );
-    }
-  }, []);
 
-  const modifiedPath = params.path
+      const dataCourse = async () => {
+        const data = await getCourseBySlug(path[0], userData.id);
+
+        if (data) {
+          console.log("DATA : ", data);
+          setData(data as stateDataCourse);
+          setTimeout(() => {
+            dispatch(
+              setPopup({
+                show: false,
+              })
+            );
+          }, 700);
+        } else {
+          dispatch(
+            setPopup({
+              show: true,
+              type: "warning",
+              title: "Not Found",
+              message: "Data not found",
+              onConfirm: () => {
+                dispatch(setPopup({ show: false }));
+                route.push("/dashboard/courses");
+              },
+            })
+          );
+        }
+      };
+
+      dataCourse();
+    }
+  }, [userData, params]);
+
+  const modifiedPath = params.path[1]
     .toString()
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -151,7 +107,9 @@ const Page = ({ params }: PageProps) => {
 
   return (
     <div className="w-full relative text-custBlack">
-      <CustButtonMenuMobile />
+      <div className="flex md:hidden">
+        <CustButtonMenuMobile />
+      </div>
       <div className="flex gap-1.5 items-center">
         <Link
           href={"/dashboard/courses"}
@@ -171,14 +129,14 @@ const Page = ({ params }: PageProps) => {
         <div className="col-span-4 grid place-content-center">
           <span
             className={`w-20 h-20 rounded-full grid place-content-center ring-4 text-base font-semibold
-            ${handleColorPercentage(data?.percentage)}
+            ${handleColorPercentage(data?.percentage || 0)}
           `}
           >
             {data?.percentage}%
           </span>
         </div>
       </div>
-      <ListMaterial />
+      <ListMaterial dataLesson={data?.lesson || []} />
       <div className="mt-5">
         <FooterModule />
       </div>

@@ -1,38 +1,49 @@
 "use client";
 
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPopup } from "@/app/redux/slices/reduxPopUpSlices";
-import { useRouter } from "next/navigation";
 import HeaderCourses from "@/app/components/molecules/headerCourses";
 import { FaUserGraduate } from "react-icons/fa6";
 import ListCourses from "@/app/components/molecules/listCourses";
 import FooterModule from "@/app/components/molecules/footerModule";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { setPopup } from "@/app/redux/slices/reduxPopUpSlices";
+import { useRouter } from "next/navigation";
+import { getAllCourse } from "@/app/helpers/getCourse";
 
 interface PageProps {}
 
 export default function Page({}: PageProps) {
-  const navigate = useRouter();
+
+  const [dataCourses, setDataCourses] = useState([] as any);
   const dispatch = useDispatch();
-  const show = useSelector((state: any) => state.popup.data.show);
+  const route = useRouter();
+  const userData = useSelector((state: any) => state.userData.data);
 
-  //   useEffect(() => {
+  useEffect(() => {
+    !userData.getAccess &&
+      dispatch(
+        setPopup({
+          title: "Access Denied",
+          message: "You don't have access to this page",
+          show: true,
+          type: "warning",
+          onConfirm: () => {
+            dispatch(setPopup({ show: false }));
+            route.push("/dashboard");
+          },
+        })
+      );
 
-  //     setTimeout(() => {
-  //       dispatch(
-  //         setPopup({
-  //           show: true,
-  //             type: "success",
-  //             title: "Success!",
-  //             message: "Congratulations your account has been successfully created",
-  //             onConfirm: () => {
-  //                 dispatch(setPopup({ show: false }));
-  //             }
-  //         })
-  //       );
+      const getCourses = async () => {
+        const res = await getAllCourse();
+        if (res) {
+          setDataCourses(res);
+        }
+      }
 
-  //     }, 100);
-  //   }, []);
+      getCourses();
+    
+  }, [userData]);
 
   return (
     <div className="w-full relative flex flex-col gap-5">
@@ -46,7 +57,7 @@ export default function Page({}: PageProps) {
           Complete all the courses you have received
         </p>
       </div>
-      <ListCourses />
+      <ListCourses dataCourse={dataCourses} />
       <FooterModule />
     </div>
   );

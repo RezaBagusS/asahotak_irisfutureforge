@@ -23,7 +23,16 @@ export default function HeaderRightSide<FC>({}: HeaderProps) {
       type: "confirm",
       onConfirm: () => {
         localStorage.clear();
-        route.push("/auth/login");
+        dispatch(setPopup({
+          title: "Loading",
+          message: "Redirect to Login Page . . .",
+          show: true,
+          type: "loading"
+        }));
+        setTimeout(() => {
+          dispatch(setPopup({ show: false }));
+          route.push("/");
+        }, 700);
       },
       onCancel: () => {
         dispatch(setPopup({
@@ -39,7 +48,7 @@ export default function HeaderRightSide<FC>({}: HeaderProps) {
 
   return (
     <div className="relative flex justify-end items-center gap-4">
-      <CustBadgeUser insentif={user.intensif} />
+      <CustBadgeUser intensif={user.intensif} />
       <Image src={bell} alt="bell" width={30} height={30} />
       <div className="cursor-pointer">
         <Image

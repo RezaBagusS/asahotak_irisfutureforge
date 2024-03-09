@@ -24,7 +24,7 @@ const schema = z.object({
 
 const FormLogin = () => {
 
-    const [checkbox, setCheckbox] = useState(false);
+  const [checkbox, setCheckbox] = useState(false);
   const dispatch = useDispatch();
   const location = useRouter();
 
@@ -59,7 +59,6 @@ const FormLogin = () => {
     })
 
     console.log("Res : ", res);
-    
 
     if (res.error) {
       dispatch(setPopup({
