@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaRegEye } from "react-icons/fa";
 import Image from "next/image";
 import hidePassword from "@/app/assets/icons/hidePassword.svg";
@@ -21,7 +21,6 @@ const CustSettingFields = ({
 }: CustSettingFieldProps) => {
 
   const [openEye, setOpenEye] = useState(false);
-  const lowerLabel = label.toLowerCase();
 
   return (
     <div className="text-custBlack flex flex-col gap-1">

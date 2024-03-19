@@ -75,3 +75,12 @@ model userLesson {
   @@index([id_lesson], map: "userLesson_id_lesson_fkey")
   @@index([id_course], map: "userLesson_id_course_fkey")
 }
+
+model updateInfo {
+  id             Int      @id @default(autoincrement())
+  id_course      Int      @unique(map: "updateInfo_id_course_fkey")
+  commit_message String   @db.Text
+  admin          String   @db.Text
+  createdAt      DateTime @default(now()) @db.Date
+  link           String   @db.Text
+}

@@ -136,7 +136,7 @@ const FormLogin = () => {
             </div>
 
             {/* Remember me */}
-            <div className="flex justify-between items-center">
+            {/* <div className="flex justify-between items-center">
               <div
                 onClick={handleCheckbox}
                 className="flex items-center gap-2 cursor-pointer"
@@ -155,7 +155,7 @@ const FormLogin = () => {
               <p className="text-[#5E9EFF] cursor-pointer text-xs md:text-base">
                 Forgot password?
               </p>
-            </div>
+            </div> */}
           </div>
           <div className="flex flex-col gap-2">
             <CustButton text="Login" />

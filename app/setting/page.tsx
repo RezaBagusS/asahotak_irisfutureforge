@@ -14,16 +14,10 @@ import { useRouter } from "next/navigation";
 import { setPopup } from "../redux/slices/reduxPopUpSlices";
 import { setUserData } from "../redux/slices/reduxUserDataSlices";
 import { updateProfileHandle } from "../helpers/updateProfile";
+import { updateProfile } from "../helpers/profileHelper";
+import { invalidateSession } from "../helpers/localStorage";
 
 interface PageProps {}
-
-const schema = z.object({
-  email: z.string().email(),
-  username: z.string().min(4),
-  password: z.string().min(8),
-});
-
-type Form = z.infer<typeof schema>;
 
 export default function Page({}: PageProps) {
 
@@ -83,47 +77,48 @@ export default function Page({}: PageProps) {
     register,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<Form>({
-    resolver: zodResolver(schema),
-  });
+  } = useForm();
 
   const user = useSelector((state:any) => state.userData.data)
 
-  const onSubmit: SubmitHandler<Form> = async (data) => {
+  const onSubmit = async (data: any) => {
 
-    // let res = await updateProfileHandle({ data })
+    const updateData = {
+      username: data.username ? data.username : user.username,
+      email: data.email ? data.email : user.email,
+      password: data.password,
+    }
 
-    // if (res.error) {
-    //   dispatch(setPopup({
-    //     title: "Failed",
-    //     message: res.message || "Update Profile Failed",
-    //     show: true,
-    //     type: "warning",
-    //     onConfirm: () => {
-    //       dispatch(setPopup({
-    //         show: false,
-    //       }));
-    //     }
-    //   }));
-    // } else {
-    //   dispatch(setPopup({
-    //     title: "Success",
-    //     message: "Update Profile Success, please login again!!",
-    //     show: true,
-    //     type: "success",
-    //     onConfirm: () => {
-    //       route.push("/auth/login");
-    //       dispatch(setPopup({
-    //         show: false,
-    //       }));
-    //     }
-    //   }));
-    // }
+    const res = await updateProfile(user.id, updateData);
 
-    // Handle form submission here
-    console.log("data : ", data);
-    console.log("error : ", errors);
-    console.log("isSubmitting : ", isSubmitting);
+    if (res.error) {
+      dispatch(setPopup({
+        title: "Failed",
+        message: res.message || "Update Profile Failed",
+        show: true,
+        type: "warning",
+        onConfirm: () => {
+          dispatch(setPopup({
+            show: false,
+          }));
+        }
+      }));
+    } else {
+      dispatch(setPopup({
+        title: "Success",
+        message: "Update Profile Success, please login again!!",
+        show: true,
+        type: "success",
+        onConfirm: () => {
+          invalidateSession();
+          route.push("/");
+          dispatch(setPopup({
+            show: false,
+          }));
+        }
+      }));
+    }
+
   };
 
   return (

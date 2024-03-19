@@ -13,6 +13,9 @@ const store = configureStore({
         popupPpt: popupPptReducer,
         userData: userDataReducers,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+      serializableCheck: false,
+    })
 })
 
 console.log("On Create Store Changed : ", store.getState());

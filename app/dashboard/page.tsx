@@ -4,9 +4,11 @@ import CustBanner from "../components/atoms/custBanner";
 import CustCardBoard from "../components/atoms/custCardBoard";
 import profileIcon from "../assets/icons/profileIcon.svg";
 import CustCardMyCourses from "../components/atoms/custCardMyCourses";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import MobileViewDashboard from "../components/molecules/mobileViewDashboard";
 import HeaderDashboard from "../components/molecules/headerDashboard";
+import Link from "next/link";
+import { getAllUpdateInfo } from "@/app/helpers/updateInfoHelper";
 
 const dataBoard = [
   {
@@ -58,10 +60,21 @@ const dataMyCourse = [
   },
 ];
 
+interface UpdateInfo {
+  id: number;
+    id_course: number;
+    course: string | undefined;
+    commit_message: string;
+    admin: string;
+    createdAt: Date;
+    link: string;
+}
+
 interface DashboardPageProps {}
 
 export default function DashboardPage({}: DashboardPageProps) {
   const cardBoxRef = useRef<HTMLDivElement>(null);
+  const [dataInfo, setDataInfo] = useState<UpdateInfo[]>([]);
   const isDraggingRef = useRef(false);
 
   const startDrag = (e: any) => {
@@ -79,6 +92,18 @@ export default function DashboardPage({}: DashboardPageProps) {
   };
 
   useEffect(() => {
+    const fetchAllDataInfo = async () => {
+      const res = await getAllUpdateInfo();
+
+      if (res) {
+        res.sort((a, b) => {
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        })
+        setDataInfo(res);
+      }
+    };
+
+    fetchAllDataInfo();
 
     const cardBox = cardBoxRef.current;
 
@@ -111,8 +136,15 @@ export default function DashboardPage({}: DashboardPageProps) {
         </div>
         <div className="py-5">
           <div className="flex justify-between items-end">
-            <h2 className="text-custPrimary font-bold text-2xl sm:text-3xl">My Course</h2>
-            <p className="text-custPrimary text-sm cursor-pointer">See all</p>
+            <h2 className="text-custPrimary font-bold text-2xl sm:text-3xl">
+              My Course
+            </h2>
+            <Link
+              href={"/dashboard/courses"}
+              className="text-custPrimary text-sm cursor-pointer"
+            >
+              See all
+            </Link>
           </div>
           <div className="flex w-full relative">
             <span className="absolute h-full z-20 left-0 px-4 bg-gradient-to-r from-custWhite"></span>
@@ -120,13 +152,11 @@ export default function DashboardPage({}: DashboardPageProps) {
               ref={cardBoxRef}
               className="w-auto overflow-x-auto scrollbar-thin flex gap-7 py-4 ps-3"
             >
-              {dataMyCourse.map((item, index) => {
-                const { title, desc, profile } = item;
+              {dataInfo.map((item, index) => {
+
                 return (
                   <CustCardMyCourses
-                    title={title}
-                    desc={desc}
-                    profile={profile}
+                    dataInfo={item}
                     key={index}
                   />
                 );
