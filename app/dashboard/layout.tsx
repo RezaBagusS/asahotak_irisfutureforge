@@ -61,7 +61,7 @@ export default function Page({ children }: PageProps) {
         )
       : dispatch(setPopup({ show: false })) && dispatch(setUserData(getUser()));
 
-      location.includes("/tryout") &&
+      location.includes("/tryout") &&  getUser().username != "muezzaID" &&
     dispatch(
       setPopup({
         title: "On Development",

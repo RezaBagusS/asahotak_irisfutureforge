@@ -84,3 +84,88 @@ model updateInfo {
   createdAt      DateTime @default(now()) @db.Date
   link           String   @db.Text
 }
+
+model Answer {
+  id_soal     Int      @id @default(autoincrement())
+  soal        String   @db.Text
+  gambar      String   @db.Text
+  id_material Int      @unique(map: "answer_id_material_fkey")
+  createdAt   DateTime @default(now()) @db.Date
+}
+
+model Material {
+  id_material    Int              @id @default(autoincrement())
+  name_material  String           @db.Text
+  countQuestion  Int
+  id_tryout      Int
+  createdAt      DateTime         @default(now()) @db.Date
+  Tryout         Tryout           @relation(fields: [id_tryout], references: [id_tryout], onUpdate: Restrict, map: "material_id_tryout_fkey")
+  userTOMaterial userTOMaterial[]
+
+  @@unique([id_tryout, id_material], map: "material_id_tryout_key")
+  @@index([id_tryout], map: "material_id_tryout_fkey")
+}
+
+model Tryout {
+  id_tryout     Int        @id @default(autoincrement())
+  name          String     @db.Text
+  start_date    DateTime   @db.Date
+  end_date      DateTime   @db.Date
+  createdAt     DateTime   @default(now()) @db.Date
+  countMaterial Int
+  isMiniTO      Boolean    @default(false)
+  Material      Material[]
+}
+
+model Voucher {
+  id_voucher   Int      @id @default(autoincrement())
+  id_tryout    Int
+  kode_voucher String   @db.Text
+  expired      DateTime @db.Date
+  maxUsage     Int
+  createdAt    DateTime @default(now()) @db.Date
+
+  @@index([id_tryout], map: "voucher_id_tryout_fkey")
+}
+
+model userResult {
+  id_result Int      @id @default(autoincrement())
+  id_user   Int
+  id_tryout Int
+  resultTO  Int
+  createdAt DateTime @default(now()) @db.Date
+
+  @@unique([id_user, id_tryout], map: "userResult_id_user_id_tryout_fkey")
+}
+
+model userTO {
+  id_userTO      Int              @id @default(autoincrement())
+  id_user        Int
+  id_tryout      Int
+  createdAt      DateTime         @default(now()) @db.Date
+  userTOMaterial userTOMaterial[]
+
+  @@unique([id_user, id_tryout], map: "userTO_id_user_id_voucher_id_tryout_id_material_fkey")
+}
+
+model userVoucher {
+  id_userVoucher Int @id @default(autoincrement())
+  id_user        Int
+  id_voucher     Int
+  created_at     Int @default(dbgenerated("(current_timestamp())"))
+
+  @@unique([id_user, id_voucher], map: "userVoucher_id_user_id_voucher_fkey")
+}
+
+model userTOMaterial {
+  id_userTOMaterial Int      @id @unique(map: "userTOmaterial_id_material_id_userTO_key") @default(autoincrement())
+  id_userTO         Int
+  id_material       Int
+  nilaiMaterial     Int
+  createdAt         Int?     @default(dbgenerated("(current_timestamp())"))
+  Material          Material @relation(fields: [id_material], references: [id_material], onUpdate: Restrict, map: "userTOmaterial_id_material_fkey")
+  userTO            userTO   @relation(fields: [id_userTO], references: [id_userTO], onUpdate: Restrict, map: "userTOmaterial_id_userTO_fkey")
+
+  @@index([id_material], map: "userTOmaterial_id_material_fkey")
+  @@index([id_userTO], map: "userTOmaterial_id_userTO_fkey")
+}

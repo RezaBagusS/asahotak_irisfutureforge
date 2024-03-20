@@ -1,4 +1,5 @@
 import { setPopup } from "@/app/redux/slices/reduxPopUpSlices";
+import Link from "next/link";
 import { CiClock2 } from "react-icons/ci";
 import { SlDocs } from "react-icons/sl";
 import { useDispatch } from "react-redux";
@@ -10,13 +11,10 @@ interface dataTryout {
     start_date: Date;
     end_date: Date;
     countMaterial: number;
-    isClaimed: boolean;
   };
 }
 
-const CustCardTO = ({ data }: dataTryout) => {
-
-  const dispatch = useDispatch();
+const CustMyCardTO = ({ data }: dataTryout) => {
 
   const formatDate = (date: Date) => {
     const newDate = new Date(date);
@@ -27,18 +25,13 @@ const CustCardTO = ({ data }: dataTryout) => {
     });
   }
 
-  const handleGetItNow = () => {
-    dispatch(
-      setPopup({
-        show: true,
-        type: "warning",
-        title: "Warning!",
-        message: "You can't get it now, before payment! Please contact our admin for more information!",
-        onConfirm: () => {
-          dispatch(setPopup({ show: false }));
-        }
-      })
-    );
+  const slugify = (text: string) => {
+    return text.toString().toLowerCase()
+      .replace(/\s+/g, '-')           // Replace spaces with -
+      .replace(/[^\w-]+/g, '')         // Remove all non-word chars
+      .replace(/--+/g, '-')           // Replace multiple - with single -
+      .replace(/^-+/, '')             // Trim - from start of text
+      .replace(/-+$/, '');            // Trim - from end of text
   }
 
   return (
@@ -55,16 +48,12 @@ const CustCardTO = ({ data }: dataTryout) => {
           <p className="text-xs md:text-sm text-gray-500 ml-1">{data.countMaterial} Subtest</p>
         </div>
       </div>
-      <button 
-      onClick={handleGetItNow}
-      disabled={data.isClaimed}
-      className="absolute right-5 disabled:cursor-default disabled:bg-slate-500 -translate-y-1/2 top-1/2 rounded-sm text-xs md:text-sm px-4 py-2 text-custWhite bg-custPrimary hover:bg-custPrimary/90">
-        {
-          data.isClaimed ? "Claimed" : "Get It Now"
-        }
-      </button>
+      <Link href={`/dashboard/tryout?id=${data.id_tryout}&name=${slugify(data.name)}`}
+      className="absolute right-5 -translate-y-1/2 top-1/2 rounded-sm text-xs md:text-sm px-4 py-2 text-custWhite bg-custPrimary hover:bg-custPrimary/90">
+        Open TO
+      </Link>
     </div>
   );
 };
 
-export default CustCardTO;
+export default CustMyCardTO;
