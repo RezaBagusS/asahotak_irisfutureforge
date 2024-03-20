@@ -41,7 +41,7 @@ const CustMyCardTO = ({ data }: dataTryout) => {
           <p className="text-xs md:text-sm text-gray-500 ml-1">{data.countMaterial} Subtest</p>
         </div>
       </div>
-      <Link href={`/dashboard/tryout?id=${hashLink(data.id_tryout.toString())}`}
+      <Link href={`/dashboard/tryout/detail?id=${hashLink(data.id_tryout.toString())}`}
       className="absolute right-5 -translate-y-1/2 top-1/2 rounded-sm text-xs md:text-sm px-4 py-2 text-custWhite bg-custPrimary hover:bg-custPrimary/90">
         Open TO
       </Link>

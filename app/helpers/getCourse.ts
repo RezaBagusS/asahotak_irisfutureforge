@@ -12,7 +12,7 @@ export async function getAllCourse() {
     return dataCourse;
 }
 
-export async function getCourseBySlug(params: string, userId: number) {
+export async function getCourseBySlug(params: string, name: string, userId: number) {
 
     const userCourse = await prisma.userCourse.findMany({
         where: {
@@ -23,6 +23,7 @@ export async function getCourseBySlug(params: string, userId: number) {
 
     if (!userCourse) {
         return {
+            error: true,
             message: "You don't have access to this course"
         }
     }
@@ -35,6 +36,7 @@ export async function getCourseBySlug(params: string, userId: number) {
 
     if (!userLesson) {
         return {
+            error: true,
             message: "You don't have access to this course"
         }
     }
@@ -51,6 +53,19 @@ export async function getCourseBySlug(params: string, userId: number) {
         }
     });
 
+    const modifiedPath = name
+    .toString()
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+    if (course?.title !== modifiedPath) {
+        return {
+            error: true,
+            message: "Course not found"
+        }
+    }
+
     const lesson = await prisma.lesson.findMany({
         where: {
             id_course: parseInt(params)
@@ -59,6 +74,7 @@ export async function getCourseBySlug(params: string, userId: number) {
 
     if (!course || !lesson) {
         return {
+            error: true,
             message: "Course not found"
         };
     }
@@ -77,7 +93,6 @@ export async function getCourseBySlug(params: string, userId: number) {
                 if (userItem.id_lesson === item.id_lesson) {
                     return userItem.isDone;
                 }
-                
             })[0],
             createdAt: item.createdAt
         }
@@ -86,6 +101,7 @@ export async function getCourseBySlug(params: string, userId: number) {
     const { title, description, codeCourse, countCourse } = course;
 
     return {
+        error: false,
         title: title,
         description: description,
         codeCourse: codeCourse,

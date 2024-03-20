@@ -57,9 +57,9 @@ const Page = ({ params }: PageProps) => {
       );
 
       const dataCourse = async () => {
-        const data = await getCourseBySlug(path[0], userData.id);
+        const data = await getCourseBySlug(path[0], path[1], userData.id);
 
-        if (data) {
+        if (!data.error) {
           console.log("DATA : ", data);
           setData(data as stateDataCourse);
           setTimeout(() => {
@@ -75,9 +75,9 @@ const Page = ({ params }: PageProps) => {
               show: true,
               type: "warning",
               title: "Not Found",
-              message: "Data not found",
+              message: data.message || "Course not found",
               onConfirm: () => {
-                dispatch(setPopup({ show: false }));
+                dispatch(setPopup({ type: "loading", message: "Back to course", show: true}));
                 route.push("/dashboard/courses");
               },
             })
