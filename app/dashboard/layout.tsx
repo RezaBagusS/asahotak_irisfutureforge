@@ -61,19 +61,19 @@ export default function Page({ children }: PageProps) {
         )
       : dispatch(setPopup({ show: false })) && dispatch(setUserData(getUser()));
 
-      location.includes("/tryout") &&  getUser().username != "muezzaID" &&
-    dispatch(
-      setPopup({
-        title: "On Development",
-        message: "This page is still on development, please come back later.",
-        show: true,
-        type: "warning",
-        onConfirm: () => {
-          dispatch(setPopup({ show: false }));
-          route.push("/dashboard");
-        },
-      })
-    );
+    //   location.includes("/tryout") &&  getUser().username != "muezzaID" &&
+    // dispatch(
+    //   setPopup({
+    //     title: "On Development",
+    //     message: "This page is still on development, please come back later.",
+    //     show: true,
+    //     type: "warning",
+    //     onConfirm: () => {
+    //       dispatch(setPopup({ show: false }));
+    //       route.push("/dashboard");
+    //     },
+    //   })
+    // );
   }, [location]);
 
   return <div className="">{children}</div>;

@@ -14,6 +14,13 @@ export async function getAllCourse() {
 
 export async function getCourseBySlug(params: string, name: string, userId: number) {
 
+    if (params === "none") {
+        return {
+            error: true,
+            message: "Course not found"
+        }
+    }
+
     const userCourse = await prisma.userCourse.findMany({
         where: {
             id_user: userId,
@@ -53,11 +60,7 @@ export async function getCourseBySlug(params: string, name: string, userId: numb
         }
     });
 
-    const modifiedPath = name
-    .toString()
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+    const modifiedPath = name.toString().split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 
     if (course?.title !== modifiedPath) {
         return {

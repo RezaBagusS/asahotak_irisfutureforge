@@ -57,7 +57,7 @@ const Page = ({ params }: PageProps) => {
       );
 
       const dataCourse = async () => {
-        const data = await getCourseBySlug(path[0], path[1], userData.id);
+        const data = await getCourseBySlug(path[0], path[1] || "none", userData.id);
 
         if (!data.error) {
           console.log("DATA : ", data);
@@ -77,7 +77,7 @@ const Page = ({ params }: PageProps) => {
               title: "Not Found",
               message: data.message || "Course not found",
               onConfirm: () => {
-                dispatch(setPopup({ type: "loading", message: "Back to course", show: true}));
+                dispatch(setPopup({ type: "loading", message: "Redirect to course . . .", show: true}));
                 route.push("/dashboard/courses");
               },
             })
@@ -89,11 +89,7 @@ const Page = ({ params }: PageProps) => {
     }
   }, [userData, params]);
 
-  const modifiedPath = params.path[1]
-    .toString()
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  const modifiedPath = params.path[1] && params.path[1].toString().split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 
   const handleColorPercentage = (percentage: number) => {
     if (percentage === 100) {
