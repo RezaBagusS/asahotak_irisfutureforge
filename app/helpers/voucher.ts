@@ -80,6 +80,8 @@ export const matchVoucher = async (id_user: number, voucher: string) => {
                 let addUserTryout = await tx.userTO.create({
                     data: {
                         id_user: id_user,
+                        isCompleted: false,
+                        resultTO: 0,
                         id_tryout: getUpdateVoucher.id_tryout,
                     }
                 })
