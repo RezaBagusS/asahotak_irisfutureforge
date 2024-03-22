@@ -58,7 +58,16 @@ export const getHaveTryout = async (id_user: number) => {
         select: {
             id_userTO: true,
             id_user: true,
-            id_tryout: true,
+            Tryout: {
+                select: {
+                    id_tryout: true,
+                    name: true,
+                    start_date: true,
+                    end_date: true,
+                    countMaterial: true,
+                    isMiniTO: true,
+                }
+            }
         },
         where: {
             id_user: id_user
@@ -69,39 +78,21 @@ export const getHaveTryout = async (id_user: number) => {
         return {};
     }
 
-    const resTryout = await prisma.tryout.findMany({
-        select: {
-            id_tryout: true,
-            name: true,
-            start_date: true,
-            end_date: true,
-            countMaterial: true,
-            isMiniTO: true
-        },
-        where: {
-            id_tryout: {
-                in: res.map((item) => item.id_tryout)
-            }
-        }
-    });
-
-    if (!resTryout) {
-        return {};
-    }
-
     return {
-        id_user: id_user,
-        tryout: resTryout.map((item) => {
+        error: false,
+        message: "Successfull Fetch Data",
+        tryout: res.map((item) => {
             return {
-                id_tryout: item.id_tryout,
-                name: item.name,
-                start_date: item.start_date,
-                end_date: item.end_date,
-                countMaterial: item.countMaterial,
-                isMiniTO: item.isMiniTO
+                id_userTO: item.id_userTO,
+                id_tryout: item.Tryout.id_tryout,
+                name: item.Tryout.name,
+                start_date: item.Tryout.start_date,
+                end_date: item.Tryout.end_date,
+                countMaterial: item.Tryout.countMaterial,
+                isMiniTO: item.Tryout.isMiniTO,
             }
         })
-    }
+    };
 
 }
 
@@ -113,16 +104,6 @@ export const userAccessTO = async (id_user: number, id_tryout: number) => {
         }
     });
 
-    console.log("==============");
-    
-    console.log({
-        id_user: id_user,
-        id_tryout: id_tryout,
-        res: res
-    });
-    
-    console.log("==============");
-
     if (res.length > 0) {
         return true;
     }
@@ -133,52 +114,117 @@ export const userAccessTO = async (id_user: number, id_tryout: number) => {
 
 export const getDetailTryout = async (id_user:number, search: string) => {
 
-    const res = await prisma.tryout.findMany({
+    const resData = await prisma.userTO.findMany({
         select: {
+            id_userTO: true,
+            id_user: true,
             id_tryout: true,
-            name: true,
-            countMaterial: true,
-            start_date: true,
-            end_date: true,
-            isMiniTO: true,
-            Material: {
+            Tryout: {
                 select: {
-                    id_material: true,
-                    name_material: true,
-                    countQuestion: true,
-                }
+                    id_tryout: true,
+                    name: true,
+                    start_date: true,
+                    end_date: true,
+                    countMaterial: true,
+                    isMiniTO: true,
+                    Material: {
+                        select: {
+                            id_material: true,
+                            name_material: true,
+                            countQuestion: true,
+                        }
+                    }
+                },
             }
         },
-    });
+        where: {
+            id_user: id_user,
+        }
+    })
 
-    if (!res) {
+    if (!resData) {
         return {
             error: true,
             message: "Unsuccessfull Fetch Data"
         };
     }
 
-    const getDatabySearch = res.filter((item) => hashLink(item.id_tryout.toString()) === search);
+    const filteredData = resData.filter((item) => {
+        return hashLink(item.Tryout.id_tryout.toString()) === search;
+    })
 
-    if (getDatabySearch.length === 0) {
+    // console.log("FILTERED DATA : ",filteredData);
+    
+
+    if (filteredData.length === 0) {
         return {
             error: true,
-            message: "Data Not Found"
-        };
-    }
-
-    const isAccess = await userAccessTO(id_user, getDatabySearch[0].id_tryout);
-
-    if (!isAccess) {
-        return {
-            error: true,
-            message: "You don't have access tryout like this"
+            message: "You don't have access this tryout"
         };
     }
 
     return {
         error: false,
         message: "Successfull Fetch Data",
-        data: getDatabySearch[0]
+        data: filteredData[0]
     }
+
+}
+
+export const getResultBoard = async (id_user: number) => {
+
+    const res = await prisma.userTO.findMany({
+        select: {
+            id_user: true,
+            Tryout : {
+                select: {
+                    id_tryout: true,
+                    name: true,
+                    start_date: true,
+                    end_date: true,
+                    countMaterial: true,
+                }
+            },
+            isCompleted: true,
+            resultTO: true,
+        },
+        where: {
+            id_user: id_user
+        }
+    })
+
+    const getCompleted = res.filter((item) => item.isCompleted === true);
+    const getUpcomingTryout = res.filter((item) => item.Tryout.start_date > new Date());
+    let getScoreTryout = 0;
+
+    for (let index = 0; index < res.length; index++) {
+        getScoreTryout += res[index].resultTO;
+    }
+
+    if (!res) {
+        return {
+            error: true,
+            message: "Unsuccessfull Fetch Data",
+        }
+    }
+
+    return {
+        error: false,
+        message: "Successfull Fetch Data",
+        data: [
+            {
+                title: "Your Score",
+                score: getScoreTryout,
+              },
+              {
+                title: "Complete Try Out",
+                score: getCompleted.length,
+              },
+              {
+                title: "Upcoming Try Out",
+                score: getUpcomingTryout.length,
+              },
+        ]
+    }
+
 }

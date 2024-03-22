@@ -3,27 +3,57 @@ import HeaderRightSide from "./headerRightSide";
 import Calendar from "./calendar";
 import CountDownBanner from "./countdownBanner";
 import CustListSchedule from "../atoms/custListSchedule";
+import { useEffect, useState } from "react";
+import { getHaveTryout } from "@/app/helpers/tbl-tryout";
+import { useSelector } from "react-redux";
+import { formatDate } from "@/app/helpers/dateHandler";
+import { PiWarningCircleBold } from "react-icons/pi";
+import { VscLoading } from "react-icons/vsc";
 
-const dataSchedule = [
-  {
-    title: "Try Out Paket 1",
-    date: "22 September 2023"
-  },
-  {
-    title: "Try Out Paket 1",
-    date: "22 September 2023"
-  },
-  {
-    title: "Try Out Paket 1",
-    date: "22 September 2023"
-  },
-  {
-    title: "Try Out Paket 1",
-    date: "22 September 2023"
-  },
-]
+interface stateDataTryout {
+  id_tryout: number;
+  name: string;
+  start_date: Date;
+  end_date: Date;
+  countMaterial: number;
+  isMiniTO: boolean;
+}
 
 const SidebarRight = () => {
+  const [dataTryout, setDataTryout] = useState<stateDataTryout[]>([]);
+  const [loading, setLoading] = useState(true);
+  const userData = useSelector((state: any) => state.userData.data);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getHaveTryout(userData.id);
+
+      if (res.tryout) {
+
+        const filteredData = res.tryout.filter((item) => {
+          return item.start_date >= new Date();
+        });
+
+        filteredData.sort((a, b) => {
+          return new Date(a.start_date).getTime() - new Date(b.start_date).getTime();
+        });
+
+        const data = filteredData.length > 3 ? filteredData.slice(0, 3) : filteredData;
+
+        setDataTryout(data);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      }
+    };
+
+    fetchData();
+  }, [userData]);
+
   return (
     <motion.aside
       initial={{ opacity: 0, x: 70 }}
@@ -35,7 +65,7 @@ const SidebarRight = () => {
       <HeaderRightSide />
 
       {/* Calendar Component */}
-      <Calendar />
+      <Calendar dataTO={dataTryout} />
 
       {/* Countdown SNBT */}
       <CountDownBanner targetDate="2024-04-30" />
@@ -44,11 +74,33 @@ const SidebarRight = () => {
       <div className="flex flex-col gap-5">
         <h2 className="text-custPrimary text-2xl font-bold">Schedule</h2>
         <div className="flex flex-col gap-3">
-          {
-            dataSchedule.map((item, index) => {
-              return <CustListSchedule title={item.title} date={item.date} key={index} />
+          {loading ? (
+            <div className="bg-white flex gap-5 items-center rounded-xl p-7">
+              <VscLoading className="text-3xl text-custPrimary animate-spin" />
+              <div className="flex flex-col gap-1 text-sm">
+                <h3 className="font-bold">Loading...</h3>
+              </div>
+            </div>
+          ) : dataTryout.length > 0 ? (
+            dataTryout.map((item, index) => {
+              return (
+                <CustListSchedule
+                  title={item.name}
+                  date={formatDate(item.start_date)}
+                  key={index}
+                />
+              );
             })
-          }
+          ) : (
+            <div className="bg-white flex gap-5 items-center rounded-xl p-7">
+              <PiWarningCircleBold className="text-3xl text-custPrimary" />
+              <div className="flex flex-col gap-1 text-sm">
+                <h3 className="font-bold">
+                  No one schedule available, keep learning!
+                </h3>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </motion.aside>

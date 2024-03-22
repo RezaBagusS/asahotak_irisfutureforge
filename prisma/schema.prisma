@@ -136,6 +136,8 @@ model userTO {
   id_userTO      Int              @id @default(autoincrement())
   id_user        Int
   id_tryout      Int
+  resultTO       Int
+  isCompleted    Boolean          @default(false)
   createdAt      DateTime         @default(now()) @db.Date
   Tryout         Tryout           @relation(fields: [id_tryout], references: [id_tryout], onUpdate: Restrict)
   userTOMaterial userTOMaterial[]

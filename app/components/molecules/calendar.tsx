@@ -6,7 +6,7 @@ import { useState } from "react";
 import chevron from "../../assets/icons/chevron.svg";
 import Image from "next/image";
 
-const arrMonth:string[] = [
+const arrMonth: string[] = [
   "January",
   "February",
   "March",
@@ -77,11 +77,24 @@ interface PropsBookingDetail {
   setBookingDetail: React.Dispatch<React.SetStateAction<IBookingDetail>>;
 }
 
-const Calendar = () => {
+interface stateDataTryout {
+  dataTO: {
+    id_tryout: number;
+    name: string;
+    start_date: Date;
+    end_date: Date;
+    countMaterial: number;
+    isMiniTO: boolean;
+  }[];
+}
+
+const Calendar = ({ dataTO }: stateDataTryout) => {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
   const [selectedDate, setSelectedDate] = useState(currentDate);
+
+  const SNBT = new Date("2024-04-30");
 
   const prevDay = () => {
     setToday(today.month(today.month() - 1));
@@ -132,19 +145,23 @@ const Calendar = () => {
         {generateDate(today.month(), today.year()).map(
           ({ date, currentMonth, today }, index) => {
             return (
-              <div
-                key={index}
-                className="flex justify-center items-center"
-              >
+              <div key={index} className="flex justify-center items-center">
                 <p
                   className={anotherDay(
                     currentMonth ? "" : "text-gray-400",
                     today ? "bg-red-600 text-white" : "",
-                    selectedDate.toDate().toDateString() ===
-                      date.toDate().toDateString()
-                      ? "bg-black text-white"
+                    dataTO.some((item) => {
+                      return (
+                        date.toDate().toDateString() ===
+                        item.start_date.toDateString()
+                      );
+                    })
+                      ? "bg-custPrimary text-white"
                       : "",
-                    "h-6 w-6 text-xs rounded-full grid place-content-center hover:bg-black/70 hover:text-white cursor-pointer transition-all"
+                    SNBT.toDateString() == date.toDate().toDateString()
+                      ? "bg-custBlack text-white"
+                      : "",
+                    "h-6 w-6 text-xs rounded-full grid place-content-center hover:bg-custPrimary/60 hover:text-white cursor-pointer transition-all"
                   )}
                   onClick={() => getSelectedDate(date)}
                 >

@@ -7,7 +7,7 @@ const userDataSlices = createSlice({
         id: 0,
         username: '',
         email: '',
-        isInsentif: 0,
+        intensif: 0,
         getAccess: 0,
     },
   },

@@ -1,20 +1,32 @@
 "use client";
 
 import { GrTest } from "react-icons/gr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AvailableTab from "./availableTab";
 import MyTryoutTab from "./myTryoutTab";
 import CustButtonMenuMobile from "@/app/components/atoms/custButtonMenuMobile";
 import FooterModule from "@/app/components/molecules/footerModule";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 interface PageProps {}
 
 export default function Page({}: PageProps) {
+
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState("available");
+
+  const params = searchParams.get("active");
 
   const handleTab = (tab: string) => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    if (params) {
+      setActiveTab(params);
+    }
+  }, [params]);
 
   return (
     <div className="w-full relative text-custBlack">
@@ -31,7 +43,8 @@ export default function Page({}: PageProps) {
         </p>
       </div>
       <div className="flex gap-5 mt-4 md:mt-7">
-        <p
+      <Link
+          href="/dashboard/tryout?active=available"
           onClick={() => handleTab("available")}
           className={`px-3 py-2 cursor-pointer rounded-md text-xs md:text-sm drop-shadow-sm
           ${
@@ -42,8 +55,9 @@ export default function Page({}: PageProps) {
         `}
         >
           Available
-        </p>
-        <p
+        </Link>
+        <Link
+          href="/dashboard/tryout?active=mytryout"
           onClick={() => handleTab("mytryout")}
           className={`px-3 py-2 cursor-pointer rounded-md text-xs md:text-sm drop-shadow-sm
           ${
@@ -54,7 +68,7 @@ export default function Page({}: PageProps) {
         `}
         >
           MyTryout
-        </p>
+        </Link>
       </div>
       <div className="bg-white mt-5 rounded-md px-4 py-6">
         {activeTab == "available" ? <AvailableTab /> : <MyTryoutTab />}

@@ -58,7 +58,7 @@ const MyTryoutTab = () => {
                 return <CustMyCardTO key={index} data={item} />
               })
             ) : (
-              <div className="w-full flex justify-center items-center">
+              <div className="w-full flex justify-center items-center text-gray-500">
                 <p>No Tryout Available</p>
               </div>
             )}

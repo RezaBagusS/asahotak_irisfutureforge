@@ -25,6 +25,15 @@ export default function MainKonten<FC>({ children }: MainKontenProps) {
     </Provider>;
   }
 
+  if (location.includes("/tryout/test")) {
+    return <Provider store={store}>
+      <Popup />
+      <main className="w-full h-screen overflow-hidden px-12 py-8 bg-[#FAFAFA]">
+        {children}
+      </main>
+    </Provider>;
+  }
+
   return (
     <Provider store={store}>
       <Popup />

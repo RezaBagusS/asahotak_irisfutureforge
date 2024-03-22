@@ -29,37 +29,49 @@ export default function Page({ children }: PageProps) {
     };
 
     const getUser = () => {
-        try {
-          let decoded = atob(localStorage.getItem("asahOtak_UD348") || "");
-          return JSON.parse(decoded);
-        } catch (e) {
-          return {};
-        }
+      try {
+        let decoded = atob(localStorage.getItem("asahOtak_UD348") || "");
+        return JSON.parse(decoded);
+      } catch (e) {
+        return {};
+      }
     };
 
-    !getActiveUser()
-      ? 
+    if (!getActiveUser()) {
       dispatch(
-          setPopup({
-            title: "Session Expired",
-            message: "Please login again",
-            show: true,
-            type: "warning",
-            onConfirm: () => {
-              dispatch(setPopup({
+        setPopup({
+          title: "Session Expired",
+          message: "Please login again",
+          show: true,
+          type: "warning",
+          onConfirm: () => {
+            dispatch(
+              setPopup({
                 title: "Loading",
                 message: "Redirect to Login Page . . .",
-                show: true, 
-                type: "loading" 
-              }));
-              setTimeout(() => {
-                dispatch(setPopup({ show: false }));
-                route.push("/");
-              }, 1000);
-            },
-          })
-        )
-      : dispatch(setPopup({ show: false })) && dispatch(setUserData(getUser()));
+                show: true,
+                type: "loading",
+              })
+            );
+            setTimeout(() => {
+              dispatch(setPopup({ show: false }));
+              route.push("/");
+            }, 1000);
+          },
+        })
+      )
+    } else {
+      dispatch(
+        setUserData({
+          id: getUser().id,
+          username: getUser().username,
+          email: getUser().email,
+          isInsentif: getUser().isInsentif,
+          getAccess: getUser().getAccess,
+        })
+      );
+      dispatch(setPopup({ show: false }));
+    }
 
     //   location.includes("/tryout") &&  getUser().username != "muezzaID" &&
     // dispatch(

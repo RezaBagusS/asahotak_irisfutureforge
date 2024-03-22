@@ -60,7 +60,7 @@ export default function HeaderRightSide<FC>({}: HeaderProps) {
           className="rounded-lg z-40"
         />
         <div className={`absolute right-0 z-30 bg-white border p-2 rounded-md transition-all duration-150
-          ${openProfile ? "opacity-100 -bottom-24" : "opacity-0 -bottom-20"}
+          ${openProfile ? "opacity-100 -bottom-24" : "opacity-0 -bottom-20 pointer-events-none"}
         `}>
           <p className="text-sm font-semibold">{user.username}</p>
           <p className="text-xs">{user.email}</p>
