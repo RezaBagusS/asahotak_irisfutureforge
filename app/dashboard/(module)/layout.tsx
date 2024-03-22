@@ -1,8 +1,9 @@
+import { Suspense } from "react";
+
 interface PageProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function Page({ children }: PageProps) {
-
-    return <div className="">{children}</div>;
+  return <Suspense>{children}</Suspense>;
 }
