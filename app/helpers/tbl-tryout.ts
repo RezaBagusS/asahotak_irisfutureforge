@@ -67,7 +67,9 @@ export const getHaveTryout = async (id_user: number) => {
                     countMaterial: true,
                     isMiniTO: true,
                 }
-            }
+            },
+            isCompleted: true,
+            resultTO: true,
         },
         where: {
             id_user: id_user
@@ -81,17 +83,7 @@ export const getHaveTryout = async (id_user: number) => {
     return {
         error: false,
         message: "Successfull Fetch Data",
-        tryout: res.map((item) => {
-            return {
-                id_userTO: item.id_userTO,
-                id_tryout: item.Tryout.id_tryout,
-                name: item.Tryout.name,
-                start_date: item.Tryout.start_date,
-                end_date: item.Tryout.end_date,
-                countMaterial: item.Tryout.countMaterial,
-                isMiniTO: item.Tryout.isMiniTO,
-            }
-        })
+        data: res
     };
 
 }

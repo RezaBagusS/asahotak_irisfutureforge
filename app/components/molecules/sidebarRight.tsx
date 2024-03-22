@@ -11,12 +11,18 @@ import { PiWarningCircleBold } from "react-icons/pi";
 import { VscLoading } from "react-icons/vsc";
 
 interface stateDataTryout {
-  id_tryout: number;
-  name: string;
-  start_date: Date;
-  end_date: Date;
-  countMaterial: number;
-  isMiniTO: boolean;
+  Tryout: {
+    id_tryout: number;
+    name: string;
+    start_date: Date;
+    end_date: Date;
+    countMaterial: number;
+    isMiniTO: boolean;
+  };
+  id_userTO: number;
+  id_user: number;
+  resultTO: number;
+  isCompleted: boolean;
 }
 
 const SidebarRight = () => {
@@ -28,22 +34,22 @@ const SidebarRight = () => {
     const fetchData = async () => {
       const res = await getHaveTryout(userData.id);
 
-      if (res.tryout) {
+      if (res.data) {
+        const filteredData = res.data
+          .filter((item) => item.Tryout.start_date >= new Date())
+          .sort(
+            (a, b) =>
+              new Date(a.Tryout.start_date).getTime() -
+              new Date(b.Tryout.start_date).getTime()
+          );
 
-        const filteredData = res.tryout.filter((item) => {
-          return item.start_date >= new Date();
-        });
-
-        filteredData.sort((a, b) => {
-          return new Date(a.start_date).getTime() - new Date(b.start_date).getTime();
-        });
-
-        const data = filteredData.length > 3 ? filteredData.slice(0, 3) : filteredData;
+        const data =
+          filteredData.length > 3 ? filteredData.slice(0, 3) : filteredData;
 
         setDataTryout(data);
         setTimeout(() => {
           setLoading(false);
-        }, 1000);
+        }, 500);
       } else {
         setTimeout(() => {
           setLoading(false);
@@ -85,8 +91,8 @@ const SidebarRight = () => {
             dataTryout.map((item, index) => {
               return (
                 <CustListSchedule
-                  title={item.name}
-                  date={formatDate(item.start_date)}
+                  title={item.Tryout.name}
+                  date={formatDate(item.Tryout.start_date)}
                   key={index}
                 />
               );

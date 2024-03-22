@@ -4,12 +4,18 @@ import { formatDate } from "@/app/helpers/dateHandler";
 
 interface stateDataTryout {
   dataTO: {
-    id_tryout: number;
-    name: string;
-    start_date: Date;
-    end_date: Date;
-    countMaterial: number;
-    isMiniTO: boolean;
+    Tryout: {
+      id_tryout: number;
+      name: string;
+      start_date: Date;
+      end_date: Date;
+      countMaterial: number;
+      isMiniTO: boolean;
+    };
+    id_userTO: number;
+    id_user: number;
+    resultTO: number;
+    isCompleted: boolean;
   }[];
 }
 
@@ -23,8 +29,8 @@ const MobileViewDashboard = ({ dataTO }: stateDataTryout) => {
           {dataTO.map((item, index) => {
             return (
               <CustListSchedule
-                title={item.name}
-                date={formatDate(item.start_date)}
+                title={item.Tryout.name}
+                date={formatDate(item.Tryout.start_date)}
                 key={index}
               />
             );

@@ -79,12 +79,18 @@ interface PropsBookingDetail {
 
 interface stateDataTryout {
   dataTO: {
-    id_tryout: number;
-    name: string;
-    start_date: Date;
-    end_date: Date;
-    countMaterial: number;
-    isMiniTO: boolean;
+    Tryout: {
+      id_tryout: number;
+      name: string;
+      start_date: Date;
+      end_date: Date;
+      countMaterial: number;
+      isMiniTO: boolean;
+    };
+    id_userTO: number;
+    id_user: number;
+    resultTO: number;
+    isCompleted: boolean;
   }[];
 }
 
@@ -153,7 +159,7 @@ const Calendar = ({ dataTO }: stateDataTryout) => {
                     dataTO.some((item) => {
                       return (
                         date.toDate().toDateString() ===
-                        item.start_date.toDateString()
+                        item.Tryout.start_date.toDateString()
                       );
                     })
                       ? "bg-custPrimary text-white"

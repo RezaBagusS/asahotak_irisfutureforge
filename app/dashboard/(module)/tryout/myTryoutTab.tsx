@@ -4,12 +4,18 @@ import { getHaveTryout } from "@/app/helpers/tbl-tryout";
 import CustMyCardTO from "@/app/components/atoms/custMyCardTO";
 
 interface stateDataTryout {
-  id_tryout: number;
-  name: string;
-  start_date: Date;
-  end_date: Date;
-  countMaterial: number;
-  isMiniTO: boolean;
+  Tryout: {
+    id_tryout: number;
+    name: string;
+    start_date: Date;
+    end_date: Date;
+    countMaterial: number;
+    isMiniTO: boolean;
+  };
+  id_userTO: number;
+  id_user: number;
+  resultTO: number;
+  isCompleted: boolean;
 }
 
 const MyTryoutTab = () => {
@@ -22,8 +28,8 @@ const MyTryoutTab = () => {
     const fetchData = async () => {
       const res = await getHaveTryout(userData.id);
 
-      if (res.tryout) {
-        setDataTryout(res.tryout);
+      if (res.data) {
+        setDataTryout(res.data);
       }
 
       setLoading(false);

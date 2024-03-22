@@ -77,12 +77,18 @@ interface UpdateInfo {
 }
 
 interface stateDataTryout {
-  id_tryout: number;
-  name: string;
-  start_date: Date;
-  end_date: Date;
-  countMaterial: number;
-  isMiniTO: boolean;
+  Tryout: {
+    id_tryout: number;
+    name: string;
+    start_date: Date;
+    end_date: Date;
+    countMaterial: number;
+    isMiniTO: boolean;
+  };
+  id_userTO: number;
+  id_user: number;
+  resultTO: number;
+  isCompleted: boolean;
 }
 
 interface stateDataBoard {
@@ -107,19 +113,12 @@ export default function DashboardPage({}: DashboardPageProps) {
     const fetchDataTryout = async () => {
       const res = await getHaveTryout(userData.id);
 
-      if (res.tryout) {
-        const filteredData = res.tryout.filter((item) => {
-          return item.start_date >= new Date();
-        });
+      if (res.data) {
+        const filteredData = res.data
+          .filter((item) => item.Tryout.start_date >= new Date())
+          .sort((a, b) => new Date(a.Tryout.start_date).getTime() - new Date(b.Tryout.start_date).getTime());
 
-        filteredData.sort((a, b) => {
-          return (
-            new Date(a.start_date).getTime() - new Date(b.start_date).getTime()
-          );
-        });
-
-        const data =
-          filteredData.length > 3 ? filteredData.slice(0, 3) : filteredData;
+        const data = filteredData.length > 3 ? filteredData.slice(0, 3) : filteredData;
 
         setDataTryout(data);
         setTimeout(() => {
@@ -249,8 +248,8 @@ export default function DashboardPage({}: DashboardPageProps) {
                   key={index}
                   className="relative flex flex-col p-3 items-start justify-center w-full animate-pulse sm:w-1/3 h-20 sm:h-28 bg-gray-200 text-custPrimary rounded-3xl shadow-md"
                 >
-                  <p className="text-xs sm:text-sm font-normal bg-gray-300 p-3 rounded-md w-2/3 mb-2"></p>
-                  <p className="text-base sm:text-lg font-bold bg-gray-300 p-6 rounded-md w-1/2"></p>
+                  <p className="text-xs sm:text-sm font-normal bg-gray-300 p-2 rounded-md w-2/3 mb-2"></p>
+                  <p className="text-base sm:text-lg font-bold bg-gray-300 p-4 rounded-md w-1/2"></p>
                   <span className="absolute top-4 sm:top-5 right-4 h-auto px-2 py-4 rounded-md bg-gray-300"></span>
                 </div>
               );
@@ -285,9 +284,12 @@ export default function DashboardPage({}: DashboardPageProps) {
               className="w-auto overflow-x-auto scrollbar-thin flex gap-7 py-4 ps-3"
             >
               {loadingInfo
-                ? Array.from({ length: 3 }).map(() => {
+                ? Array.from({ length: 3 }).map((_, index) => {
                     return (
-                      <div className="min-h-40 min-w-72 px-7 pt-7 pb-3 bg-gray-200 flex flex-col justify-between gap-2 animate-pulse rounded-3xl shadow-md">
+                      <div
+                        key={index}
+                        className="min-h-40 min-w-72 px-7 pt-7 pb-3 bg-gray-200 flex flex-col justify-between gap-2 animate-pulse rounded-3xl shadow-md"
+                      >
                         <div className="flex flex-col gap-2">
                           <h3 className="text-sm font-semibold p-3 bg-gray-300 rounded-md w-1/2"></h3>
                           <p className="text-xs p-3 rounded-md bg-gray-300 w-2/3"></p>
