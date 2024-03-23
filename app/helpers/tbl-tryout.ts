@@ -11,6 +11,14 @@ export const getFutureTryout = async (id_user: number) => {
             start_date: true,
             end_date: true,
             countMaterial: true,
+            Material: {
+                select: {
+                    id_material: true,
+                    name_material: true,
+                    countQuestion: true,
+                    time: true,
+                }
+            }
         },
         orderBy: {
             start_date: 'asc'
@@ -47,6 +55,7 @@ export const getFutureTryout = async (id_user: number) => {
             start_date: item.start_date,
             end_date: item.end_date,
             countMaterial: item.countMaterial,
+            totalMinutes: item.Material.reduce((acc, curr) => acc + curr.time, 0),
             isClaimed: resClaimed.find((claimed) => claimed.id_tryout === item.id_tryout) ? true : false
         }
     });
@@ -68,6 +77,18 @@ export const getHaveTryout = async (id_user: number) => {
                     isMiniTO: true,
                 }
             },
+            userTOMaterial: {
+                select: {
+                    Material: {
+                        select: {
+                            id_material: true,
+                            name_material: true,
+                            countQuestion: true,
+                            time: true,
+                        }
+                    }
+                }
+            },
             isCompleted: true,
             resultTO: true,
         },
@@ -83,7 +104,25 @@ export const getHaveTryout = async (id_user: number) => {
     return {
         error: false,
         message: "Successfull Fetch Data",
-        data: res
+        data: res.map((item) => {
+            return {
+                id_userTO: item.id_userTO,
+                id_user: item.id_user,
+                Tryout: {
+                    id_tryout: item.Tryout.id_tryout,
+                    name: item.Tryout.name,
+                    start_date: item.Tryout.start_date,
+                    end_date: item.Tryout.end_date,
+                    countMaterial: item.Tryout.countMaterial,
+                    isMiniTO: item.Tryout.isMiniTO,
+                },
+                totalMinutes: item.userTOMaterial.reduce((acc, curr) => {
+                    return acc + curr.Material.time;
+                }, 0),
+                isCompleted: item.isCompleted,
+                resultTO: item.resultTO
+            }
+        })
     };
 
 }

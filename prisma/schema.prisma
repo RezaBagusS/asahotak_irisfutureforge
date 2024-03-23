@@ -90,6 +90,7 @@ model Material {
   name_material  String           @db.Text
   countQuestion  Int
   id_tryout      Int
+  time           Int
   createdAt      DateTime         @default(now()) @db.Date
   Tryout         Tryout           @relation(fields: [id_tryout], references: [id_tryout], onUpdate: Restrict, map: "material_id_tryout_fkey")
   Questions      Questions?

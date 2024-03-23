@@ -15,6 +15,7 @@ interface dataTryout {
       countMaterial: number;
       isMiniTO: boolean;
     };
+    totalMinutes: number;
     id_userTO: number;
     id_user: number;
     resultTO: number;
@@ -39,7 +40,7 @@ const CustMyCardTO = ({ data }: dataTryout) => {
       <div className="flex justify-between md:justify-start md:gap-5 mt-5">
         <div className="flex gap-1">
           <CiClock2 className="text-custPrimary" />
-          <p className="text-xs md:text-sm text-gray-500 ml-1">60 Minute</p>
+          <p className="text-xs md:text-sm text-gray-500 ml-1">{data.totalMinutes} Minute</p>
         </div>
         <div className="flex gap-1">
           <SlDocs className="text-custPrimary" />

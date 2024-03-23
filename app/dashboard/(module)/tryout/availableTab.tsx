@@ -10,6 +10,7 @@ interface stateDataTryout {
   start_date: Date;
   end_date: Date;
   countMaterial: number;
+  totalMinutes: number;
   isClaimed: boolean;
 }
 

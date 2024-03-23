@@ -10,6 +10,7 @@ interface dataTryout {
     start_date: Date;
     end_date: Date;
     countMaterial: number;
+    totalMinutes: number;
     isClaimed: boolean;
   };
 }
@@ -48,7 +49,7 @@ const CustCardTO = ({ data }: dataTryout) => {
       <div className="flex justify-between md:justify-start md:gap-5 mt-5">
         <div className="flex gap-1">
           <CiClock2 className="text-custPrimary" />
-          <p className="text-xs md:text-sm text-gray-500 ml-1">60 Minute</p>
+          <p className="text-xs md:text-sm text-gray-500 ml-1">{data.totalMinutes} Minute</p>
         </div>
         <div className="flex gap-1">
           <SlDocs className="text-custPrimary" />

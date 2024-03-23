@@ -12,6 +12,7 @@ interface stateDataTryout {
     countMaterial: number;
     isMiniTO: boolean;
   };
+  totalMinutes: number;
   id_userTO: number;
   id_user: number;
   resultTO: number;
@@ -29,6 +30,7 @@ const MyTryoutTab = () => {
       const res = await getHaveTryout(userData.id);
 
       if (res.data) {
+        console.log("DATA TRYOUT : ",res.data);
         setDataTryout(res.data);
       }
 
