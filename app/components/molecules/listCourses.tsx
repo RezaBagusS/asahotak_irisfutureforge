@@ -135,12 +135,16 @@ const ListCourses = ({ dataCourse }: ListCoursesProps) => {
           percentage: getPercentage(item.id),
         };
       });
+      
+      const filterData = sortData.filter((data) => {
+        return data.title.toLowerCase().includes(keyword.toLowerCase());
+      })
 
-      sortData.sort((a, b) => {
+      filterData.sort((a, b) => {
         return a.percentage - b.percentage;
       });
 
-      setSortedData(sortData);
+      setSortedData(filterData);
     };
 
     // Get User Courses

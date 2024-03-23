@@ -53,11 +53,11 @@ const CustMyCardTO = ({ data }: dataTryout) => {
           data.Tryout.id_tryout.toString()
         )}`}
         className={`absolute right-5 -translate-y-1/2 top-1/2 rounded-sm text-xs md:text-sm px-4 py-2 text-custWhite 
-          ${true ? "bg-slate-500 hover:bg-slate-500/80 font-semibold" : "bg-custPrimary hover:bg-custPrimary/90"}
+          ${data.isCompleted ? "bg-slate-500 hover:bg-slate-500/80 font-semibold" : "bg-custPrimary hover:bg-custPrimary/90"}
         `}
       >
         {
-          true ? "Review" : "Open TO"
+          data.isCompleted ? "Review" : "Open TO"
         }
       </Link>
     </div>

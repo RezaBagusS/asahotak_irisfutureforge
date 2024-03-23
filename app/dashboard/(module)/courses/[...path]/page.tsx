@@ -55,7 +55,7 @@ const Page = ({ params }: PageProps) => {
           message: "Wait a moment . . .",
         })
       );
-
+      
       const dataCourse = async () => {
         const data = await getCourseBySlug(path[0], path[1] || "none", userData.id);
 

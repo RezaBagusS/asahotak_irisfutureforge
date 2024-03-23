@@ -62,7 +62,7 @@ export async function getCourseBySlug(params: string, name: string, userId: numb
 
     const modifiedPath = name.toString().split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 
-    if (course?.title !== modifiedPath) {
+    if (course?.title.toString().trim().toLocaleLowerCase() != modifiedPath.toString().trim().toLocaleLowerCase()){
         return {
             error: true,
             message: "Course not found"
