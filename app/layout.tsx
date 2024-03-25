@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import MainKonten from "./helpers/MainKonten";
+import { Suspense } from "react";
 
 const Nunito = Nunito_Sans({ subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
       <body
         className={`${Nunito.className} cust-outer-container bg-[#FAFAFA] text-custBlack flex overflow-y-auto overflow-x-hidden`}
       >
+        <Suspense fallback={<div>Loading...</div>}>
           <MainKonten>{children}</MainKonten>
+        </Suspense>
       </body>
     </html>
   );

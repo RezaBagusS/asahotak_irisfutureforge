@@ -5,6 +5,7 @@ import { setPopup } from "../redux/slices/reduxPopUpSlices";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { setUserData } from "../redux/slices/reduxUserDataSlices";
+import { Suspense } from "react";
 
 interface PageProps {
   children: React.ReactNode;
@@ -59,7 +60,7 @@ export default function Page({ children }: PageProps) {
             }, 1000);
           },
         })
-      )
+      );
     } else {
       dispatch(
         setUserData({
@@ -88,5 +89,5 @@ export default function Page({ children }: PageProps) {
     // );
   }, [location]);
 
-  return <div className="">{children}</div>;
+  return <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>;
 }
