@@ -1,6 +1,6 @@
 "use client";
 
-import { getInfoTest } from "@/app/helpers/popupTestHelpers";
+import { getInfoTest } from "@/app/helpers/testHelpers";
 import { setPopupTest } from "@/app/redux/slices/reduxPopUpTestSlices";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -106,7 +106,7 @@ const PopupTest = () => {
                       soal pilihan ganda dengan waktu pengerjaan{" "}
                       {dataInfoTest.userTO.Tryout.Material[0].time} menit.
                       Setiap soal memiliki bobot nilai berbeda. Jika anda sudah
-                      siap, silahkan klik tombol "Mulai Ujian".
+                      siap, silahkan klik tombol &quot;Mulai Ujian&quot;.
                     </p>
                     <p>
                       <strong>Perhatian: </strong> Anda tidak diperbolehkan

@@ -162,6 +162,7 @@ model userTOMaterial {
   id_userTO         Int
   id_material       Int
   nilaiMaterial     Int
+  isCompleted       Boolean  @default(false)
   createdAt         Int?     @default(dbgenerated("(current_timestamp())"))
   Material          Material @relation(fields: [id_material], references: [id_material], onUpdate: Restrict, map: "userTOmaterial_id_material_fkey")
   userTO            userTO   @relation(fields: [id_userTO], references: [id_userTO], onUpdate: Restrict, map: "userTOmaterial_id_userTO_fkey")
