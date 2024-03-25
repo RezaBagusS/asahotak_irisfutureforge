@@ -2,8 +2,8 @@
 
 import { GrTest } from "react-icons/gr";
 import { useEffect, useState } from "react";
-import AvailableTab from "./availableTab";
-import MyTryoutTab from "./myTryoutTab";
+import AvailableTab from "@/app/components/molecules/availableTab";
+import MyTryoutTab from "@/app/components/molecules/myTryoutTab";
 import CustButtonMenuMobile from "@/app/components/atoms/custButtonMenuMobile";
 import FooterModule from "@/app/components/molecules/footerModule";
 import Link from "next/link";
