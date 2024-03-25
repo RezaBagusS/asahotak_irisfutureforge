@@ -12,6 +12,7 @@ import { SlDocs } from "react-icons/sl";
 import { CgReadme } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
 import { setPopup } from "@/app/redux/slices/reduxPopUpSlices";
+import { setPopupTest } from "@/app/redux/slices/reduxPopUpTestSlices";
 
 interface stateDataTryout {
   id_userTO: number;
@@ -45,7 +46,6 @@ export default function Page({}: PageProps) {
   const [detailData, setDetailData] = useState<stateDataTryout>();
 
   useEffect(() => {
-
     if (userData.id != 0) {
       const res = getDetailTryout(userData.id, search ?? "");
       res.then((res: any) => {
@@ -62,7 +62,7 @@ export default function Page({}: PageProps) {
                 setLoading(false);
               },
             })
-          ); 
+          );
         }
 
         if (res.data) {
@@ -73,41 +73,47 @@ export default function Page({}: PageProps) {
     }
   }, [userData]);
 
+  const handleClickStart = () => {
+    dispatch(setPopupTest({
+      show: true,
+    }))
+  }
+
   return (
-    <div className="w-full relative text-custBlack">
-      {loading ? (
-        <>
-          <div className="w-full mt-5 rounded-md bg-white p-5 animate-pulse">
-            <div className="w-full flex flex-col gap-3">
-              <div className="font-bold text-lg bg-gray-400 w-2/3 p-4 rounded-md animate-pulse"></div>
-              <div className="flex gap-5">
-                <div className="text-xs bg-gray-400 w-1/6 p-2 rounded-md animate-pulse"></div>
-                <div className="px-5 py-3 w-20 bg-gray-400 rounded-md animate-pulse"></div>
+    <>
+      <div className="w-full relative text-custBlack">
+        {loading ? (
+          <>
+            <div className="w-full mt-5 rounded-md bg-white p-5 animate-pulse">
+              <div className="w-full flex flex-col gap-3">
+                <div className="font-bold text-lg bg-gray-400 w-2/3 p-4 rounded-md animate-pulse"></div>
+                <div className="flex gap-5">
+                  <div className="text-xs bg-gray-400 w-1/6 p-2 rounded-md animate-pulse"></div>
+                  <div className="px-5 py-3 w-20 bg-gray-400 rounded-md animate-pulse"></div>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="w-full mt-5 rounded-md bg-white p-5 animate-pulse">
-            <h1 className="text-2xl font-bold text-custPrimary bg-gray-400 p-5 w-1/3 border-b rounded-md"></h1>
-            <div className="flex flex-col gap-5 mt-3">
-              <div className="w-full flex justify-between items-center h-[118px] animate-pulse">
-                <div className="w-full flex flex-col gap-3">
-                  <div className="font-bold text-lg bg-gray-400 w-1/3 p-4 rounded-md"></div>
-                  <div className="text-xs bg-gray-400 w-1/6 p-2 rounded-md"></div>
+            <div className="w-full mt-5 rounded-md bg-white p-5 animate-pulse">
+              <h1 className="text-2xl font-bold text-custPrimary bg-gray-400 p-5 w-1/3 border-b rounded-md"></h1>
+              <div className="flex flex-col gap-5 mt-3">
+                <div className="w-full flex justify-between items-center h-[118px] animate-pulse">
+                  <div className="w-full flex flex-col gap-3">
+                    <div className="font-bold text-lg bg-gray-400 w-1/3 p-4 rounded-md"></div>
+                    <div className="text-xs bg-gray-400 w-1/6 p-2 rounded-md"></div>
+                  </div>
+                  <div className="px-5 py-3 w-20 bg-gray-400"></div>
                 </div>
-                <div className="px-5 py-3 w-20 bg-gray-400"></div>
-              </div>
-              <div className="w-full flex justify-between items-center h-[118px] animate-pulse">
-                <div className="w-full flex flex-col gap-3">
-                  <div className="font-bold text-lg bg-gray-400 w-1/3 p-4 rounded-md"></div>
-                  <div className="text-xs bg-gray-400 w-1/6 p-2 rounded-md"></div>
+                <div className="w-full flex justify-between items-center h-[118px] animate-pulse">
+                  <div className="w-full flex flex-col gap-3">
+                    <div className="font-bold text-lg bg-gray-400 w-1/3 p-4 rounded-md"></div>
+                    <div className="text-xs bg-gray-400 w-1/6 p-2 rounded-md"></div>
+                  </div>
+                  <div className="px-5 py-3 w-20 bg-gray-400"></div>
                 </div>
-                <div className="px-5 py-3 w-20 bg-gray-400"></div>
               </div>
             </div>
-          </div>
-        </>
-      ) : (
-        detailData ? (
+          </>
+        ) : detailData ? (
           <>
             <div className="flex md:hidden">
               <CustButtonMenuMobile />
@@ -161,7 +167,8 @@ export default function Page({}: PageProps) {
                       </div>
                       <div className="flex items-center pe-4">
                         <Link
-                          href={`/dashboard/tryout/test?id=${search}/${item.id_material}`}
+                        onClick={handleClickStart}
+                          href={`/dashboard/tryout/detail?id=${search}&subtest=${item.id_material}`}
                           className="text-white bg-custPrimary px-5 py-1 hover:underline"
                         >
                           Start
@@ -181,8 +188,8 @@ export default function Page({}: PageProps) {
               No Data Found
             </h1>
           </div>
-        )
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }

@@ -1,16 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CgClose } from "react-icons/cg";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoPersonCircleOutline } from "react-icons/io5";
+import { useState } from "react";
 
 const Test = () => {
+  const [answer, setAnswer] = useState<string>("");
   const route = useRouter();
+  const search = useSearchParams();
+  const idMaterial = search.get("id");
+  const location = usePathname();
 
-  const handleClose = () => {
-    route.push("/dashboard/tryout");
+  const handleChooseAnswer = (answer: string) => {
+    setAnswer(answer);
   };
 
   return (
@@ -47,12 +52,13 @@ const Test = () => {
           </div>
           <div className="grid grid-cols-5 h-fit gap-3">
             {Array.from({ length: 30 }, (_, i) => (
-              <div
+              <a
                 key={i}
+                href={`${location}?id=${idMaterial}&page=${i + 1}`}
                 className="flex gap-2 items-center justify-center rounded-sm cursor-pointer hover:bg-slate-200 col-span-1 aspect-square p-2 border bg-slate-100"
               >
                 <h1 className="text-sm font-bold text-custBlack">{i + 1}</h1>
-              </div>
+              </a>
             ))}
           </div>
         </div>
@@ -70,9 +76,21 @@ const Test = () => {
               </h2>
               <div className="flex flex-col gap-3 overflow-y-auto">
                 {Array.from({ length: 4 }, (_, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="flex gap-2 items-center col-span-2 justify-center rounded-sm cursor-pointer hover:bg-slate-200 aspect-square w-[45px] h-[45px] border bg-slate-100">
-                      <h1 className="text-sm font-bold text-custBlack">
+                  <div
+                    key={i}
+                    onClick={() => handleChooseAnswer(String.fromCharCode(65 + i))}
+                    className="flex items-center gap-3 cursor-pointer group"
+                  >
+                    <div
+                      className={`flex gap-2 items-center col-span-2 justify-center rounded-sm aspect-square w-[45px] h-[45px] border
+                      ${
+                        answer == String.fromCharCode(65 + i)
+                          ? "bg-custPrimary text-white"
+                          : "bg-slate-100 text-custBlack group-hover:bg-slate-200"
+                      }
+                    `}
+                    >
+                      <h1 className="text-sm font-bold">
                         {String.fromCharCode(65 + i)}
                       </h1>
                     </div>

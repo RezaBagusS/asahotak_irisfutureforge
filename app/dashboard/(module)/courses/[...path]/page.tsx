@@ -22,6 +22,7 @@ interface lesson {
   codeLesson?: string;
   link_ppt?: string | "";
   link_video?: string | "";
+  link_videoIntensif?: string | "";
   link_quiz?: string | "";
   openLesson?: boolean;
   id_course?: number;

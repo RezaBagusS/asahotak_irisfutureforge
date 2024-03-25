@@ -25,7 +25,6 @@ const AvailableTab = () => {
       setDataTryout(res);
       setLoading(false);
       console.log("Data Tryout : ", res);
-      
     };
 
     fetchData();

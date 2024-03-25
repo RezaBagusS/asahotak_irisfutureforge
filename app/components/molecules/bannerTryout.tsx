@@ -45,6 +45,7 @@ const BannerTryout = () => {
           dispacth(setPopup({ show: false }));
           toggleLoading();
           reset();
+          window.location.reload();
         }
       }));
     }

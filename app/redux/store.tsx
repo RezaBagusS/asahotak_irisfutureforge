@@ -4,6 +4,7 @@ import popupPptReducer from "./slices/reduxPopUpPptSlices";
 import menuMobileReduces from "./slices/reduxMenuMobileSlices";
 import keywordSearchReducers from "./slices/reduxKeywordSearchSlices";
 import userDataReducers from "./slices/reduxUserDataSlices";
+import popupTestReducers from "./slices/reduxPopUpTestSlices";
 
 const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
         keywordSearch: keywordSearchReducers,
         popupPpt: popupPptReducer,
         userData: userDataReducers,
+        popupTest: popupTestReducers
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false,

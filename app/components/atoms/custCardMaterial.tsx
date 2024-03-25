@@ -13,6 +13,7 @@ interface lesson {
   codeLesson?: string;
   link_ppt?: string | "";
   link_video?: string | "";
+  link_videoIntensif?: string | "";
   link_quiz?: string | "";
   openLesson?: boolean;
   id_course?: number;
@@ -38,6 +39,7 @@ const CustListMaterial = ({ data, index }: CustListMaterialProps) => {
     link_ppt,
     link_quiz,
     link_video,
+    link_videoIntensif,
     openLesson,
     isDone,
   } = data;
@@ -59,7 +61,7 @@ const CustListMaterial = ({ data, index }: CustListMaterialProps) => {
     dispatch(
       setPopupPpt({
         show: true,
-        link: link_video,
+        link: userData.intensif ? link_videoIntensif : link_video,
       })
     );
   };

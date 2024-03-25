@@ -89,6 +89,7 @@ export async function getCourseBySlug(params: string, name: string, userId: numb
             codeLesson: item.codeLesson,
             link_ppt: item.link_ppt,
             link_video: item.link_video,
+            link_videoIntensif : item.link_videoIntensif,
             link_quiz: item.link_quiz,
             openLesson: item.openLesson,
             id_course: item.id_course,

@@ -32,17 +32,18 @@ model Course {
 }
 
 model Lesson {
-  id_lesson  Int          @id @default(autoincrement())
-  title      String
-  codeLesson String       @unique
-  link_ppt   String?
-  link_video String?
-  link_quiz  String?
-  openLesson Boolean      @default(false)
-  id_course  Int
-  createdAt  DateTime     @default(now())
-  course     Course       @relation(fields: [id_course], references: [id])
-  userLesson userLesson[]
+  id_lesson          Int          @id @default(autoincrement())
+  title              String
+  codeLesson         String       @unique
+  link_ppt           String?
+  link_video         String?
+  link_quiz          String?
+  link_videoIntensif String       @db.Text
+  openLesson         Boolean      @default(false)
+  id_course          Int
+  createdAt          DateTime     @default(now())
+  course             Course       @relation(fields: [id_course], references: [id])
+  userLesson         userLesson[]
 
   @@unique([id_course, id_lesson])
 }
