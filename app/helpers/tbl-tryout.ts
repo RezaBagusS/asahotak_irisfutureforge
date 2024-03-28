@@ -150,6 +150,7 @@ export const getDetailTryout = async (id_user:number, search: string) => {
             id_userTO: true,
             id_user: true,
             id_tryout: true,
+            isCompleted: true,
             Tryout: {
                 select: {
                     id_tryout: true,
@@ -164,7 +165,7 @@ export const getDetailTryout = async (id_user:number, search: string) => {
                             name_material: true,
                             countQuestion: true,
                         }
-                    }
+                    },
                 },
             }
         },
@@ -200,6 +201,68 @@ export const getDetailTryout = async (id_user:number, search: string) => {
         data: filteredData[0]
     }
 
+}
+
+export const getStatusMaterial = async (id_user:number, search: string) => {
+
+    if (!id_user || !search) {
+        return {
+            error: true,
+            message: "Invalid Parameter"
+        }
+    }
+
+    const res = await prisma.tryout.findMany();
+
+    if (!res) {
+        return {
+            error: true,
+            message: "Unsuccessfull Fetch Data"
+        };
+    }
+
+    const filteredData = res.filter((item) => {
+        return hashLink(item.id_tryout.toString()) === search;
+    })
+
+    if (filteredData.length === 0) {
+        return {
+            error: true,
+            message: "You don't have access this tryout"
+        };
+    }
+
+    const resData = await prisma.userTOMaterial.findMany({
+        select: {
+            id_material: true,
+            isCompleted: true,
+            userTO: {
+                select: {
+                    id_user: true,
+                    id_tryout: true,
+                }
+            }
+        },
+        where: {
+            userTO: {
+                id_user: id_user,
+                id_tryout: filteredData[0].id_tryout
+            }
+        }
+    })
+
+    if (!resData) {
+        return {
+            error: true,
+            message: "Unsuccessfull Fetch Data"
+        };
+    }
+
+    return {
+        error: false,
+        message: "Successfull Fetch Data",
+        data: resData
+    }
 }
 
 export const getResultBoard = async (id_user: number) => {

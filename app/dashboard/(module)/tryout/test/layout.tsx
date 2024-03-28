@@ -43,5 +43,5 @@ export default function Page({ children }: PageProps) {
     });
   }, [userData, search.get("id"), search.get("subtest")]);
 
-  return <Suspense>{children}</Suspense>;
+  return <div>{children}</div>;
 }

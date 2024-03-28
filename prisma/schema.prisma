@@ -94,7 +94,7 @@ model Material {
   time           Int
   createdAt      DateTime         @default(now()) @db.Date
   Tryout         Tryout           @relation(fields: [id_tryout], references: [id_tryout], onUpdate: Restrict, map: "material_id_tryout_fkey")
-  Questions      Questions?
+  Questions      Questions[]
   userTOMaterial userTOMaterial[]
 
   @@unique([id_tryout, id_material], map: "material_id_tryout_key")
@@ -174,8 +174,21 @@ model userTOMaterial {
 model Questions {
   id_soal     Int      @id @default(autoincrement())
   soal        String   @db.Text
-  gambar      String   @db.Text
-  id_material Int      @unique(map: "answer_id_material_fkey")
+  id_material Int
   createdAt   DateTime @default(now()) @db.Date
+  Answer      Answer[]
   Material    Material @relation(fields: [id_material], references: [id_material], onUpdate: Restrict, map: "questions_id_material_fkey")
+
+  @@index([id_material], map: "answer_id_material_fkey")
+}
+
+model Answer {
+  id_answer  Int       @id @default(autoincrement())
+  answer     String    @db.Text
+  isTrue     Boolean   @default(false)
+  id_soal    Int
+  created_at DateTime  @default(now()) @db.Date
+  Questions  Questions @relation(fields: [id_soal], references: [id_soal], onUpdate: Restrict, map: "answer_id_soal_fkey")
+
+  @@index([id_soal], map: "answer_id_soal_fkey")
 }

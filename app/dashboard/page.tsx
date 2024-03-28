@@ -116,9 +116,14 @@ export default function DashboardPage({}: DashboardPageProps) {
       if (res.data) {
         const filteredData = res.data
           .filter((item) => item.Tryout.start_date >= new Date())
-          .sort((a, b) => new Date(a.Tryout.start_date).getTime() - new Date(b.Tryout.start_date).getTime());
+          .sort(
+            (a, b) =>
+              new Date(a.Tryout.start_date).getTime() -
+              new Date(b.Tryout.start_date).getTime()
+          );
 
-        const data = filteredData.length > 3 ? filteredData.slice(0, 3) : filteredData;
+        const data =
+          filteredData.length > 3 ? filteredData.slice(0, 3) : filteredData;
 
         setDataTryout(data);
         setTimeout(() => {
@@ -283,30 +288,38 @@ export default function DashboardPage({}: DashboardPageProps) {
               ref={cardBoxRef}
               className="w-auto overflow-x-auto scrollbar-thin flex gap-7 py-4 ps-3"
             >
-              {loadingInfo
-                ? Array.from({ length: 3 }).map((_, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="min-h-40 min-w-72 px-7 pt-7 pb-3 bg-gray-200 flex flex-col justify-between gap-2 animate-pulse rounded-3xl shadow-md"
-                      >
-                        <div className="flex flex-col gap-2">
-                          <h3 className="text-sm font-semibold p-3 bg-gray-300 rounded-md w-1/2"></h3>
-                          <p className="text-xs p-3 rounded-md bg-gray-300 w-2/3"></p>
-                        </div>
-                        <div className="flex justify-between items-end">
-                          <div className="flex items-center gap-2">
-                            <span className="w-5 h-5 rounded-full bg-gray-300"></span>
-                            <p className="text-xs bg-gray-300 rounded-md w-12 p-2"></p>
-                          </div>
-                          <p className="bg-gray-300 rounded-md w-1/3 p-2"></p>
-                        </div>
+              {loadingInfo ? (
+                Array.from({ length: 3 }).map((_, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="min-h-40 min-w-72 px-7 pt-7 pb-3 bg-gray-200 flex flex-col justify-between gap-2 animate-pulse rounded-3xl shadow-md"
+                    >
+                      <div className="flex flex-col gap-2">
+                        <h3 className="text-sm font-semibold p-3 bg-gray-300 rounded-md w-1/2"></h3>
+                        <p className="text-xs p-3 rounded-md bg-gray-300 w-2/3"></p>
                       </div>
-                    );
-                  })
-                : dataInfo.map((item, index) => {
-                    return <CustCardMyCourses dataInfo={item} key={index} />;
-                  })}
+                      <div className="flex justify-between items-end">
+                        <div className="flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-full bg-gray-300"></span>
+                          <p className="text-xs bg-gray-300 rounded-md w-12 p-2"></p>
+                        </div>
+                        <p className="bg-gray-300 rounded-md w-1/3 p-2"></p>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : dataInfo.length > 0 ? (
+                dataInfo.map((item, index) => {
+                  return <CustCardMyCourses dataInfo={item} key={index} />;
+                })
+              ) : (
+                <div className="flex">
+                  <p className="italic text-sm text-center">
+                    No one course available, take a course and keep learning!
+                  </p>
+                </div>
+              )}
             </div>
             <span className="absolute h-full z-20 right-0 px-4 bg-gradient-to-l from-custWhite"></span>
           </div>

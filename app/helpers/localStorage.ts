@@ -15,6 +15,13 @@ import { jwtDecode } from "jwt-decode";
       localStorage.setItem("asahOtak_EP728", exp);
     }
   };
+
+  export const customLocalStorage = (key:string, value:any) => {
+    if (typeof window !== 'undefined') {
+      localStorage
+        .setItem(key, value);
+    }
+  }
   
   export const getActiveUser = () => {
     const expirationTime = localStorage.getItem("asahOtak_EP728");
@@ -36,6 +43,15 @@ import { jwtDecode } from "jwt-decode";
       return localStorage.getItem("asahOtak_TN903");
     }
   }
+
+  export const getUser = () => {
+    try {
+      let decoded = atob(localStorage.getItem("asahOtak_UD348") || "");
+      return JSON.parse(decoded);
+    } catch (e) {
+      return {};
+    }
+  };
 
 export const invalidateSession = () => {
   if (typeof window !== 'undefined') {

@@ -3,7 +3,7 @@
 import CustButtonMenuMobile from "@/app/components/atoms/custButtonMenuMobile";
 import FooterModule from "@/app/components/molecules/footerModule";
 import { formatDate } from "@/app/helpers/dateHandler";
-import { getDetailTryout } from "@/app/helpers/tbl-tryout";
+import { getDetailTryout, getStatusMaterial } from "@/app/helpers/tbl-tryout";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ import { CgReadme } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
 import { setPopup } from "@/app/redux/slices/reduxPopUpSlices";
 import { setPopupTest } from "@/app/redux/slices/reduxPopUpTestSlices";
+import { hashLink } from "@/app/helpers/URLhelpers";
 
 interface stateDataTryout {
   id_userTO: number;
@@ -29,8 +30,21 @@ interface stateDataTryout {
       id_material: number;
       name_material: string;
       countQuestion: number;
+      userTOMaterial: {
+        id_material: number;
+        isCompleted: boolean;
+      };
     }[];
   };
+}
+
+interface stateDataStatus {
+  id_material: number;
+  isCompleted: boolean;
+  userTO: {
+    id_user: number;
+    id_tryout: number;
+  }[];
 }
 
 interface PageProps {}
@@ -44,12 +58,13 @@ export default function Page({}: PageProps) {
   const userData = useSelector((state: any) => state.userData.data);
   const [loading, setLoading] = useState(true);
   const [detailData, setDetailData] = useState<stateDataTryout>();
+  const [statusMaterial, setStatusMaterial] = useState<stateDataStatus[]>([]);
 
   useEffect(() => {
     if (userData.id != 0) {
-      const res = getDetailTryout(userData.id, search ?? "");
+      const res = getStatusMaterial(userData.id, search ?? "");
+
       res.then((res: any) => {
-        console.log("RES : ", res);
         if (res.error) {
           dispatch(
             setPopup({
@@ -66,6 +81,37 @@ export default function Page({}: PageProps) {
         }
 
         if (res.data) {
+          console.log("DATA STATUS : ", res.data);
+          setStatusMaterial(res.data);
+          setLoading(false);
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userData.id != 0) {
+      const res = getDetailTryout(userData.id, search ?? "");
+
+      res.then((res: any) => {
+        if (res.error) {
+          dispatch(
+            setPopup({
+              title: "Error",
+              type: "warning",
+              message: res.message,
+              show: true,
+              onConfirm: () => {
+                route.push("/dashboard/tryout");
+                setLoading(false);
+              },
+            })
+          );
+        }
+
+        if (res.data) {
+          console.log("DATA DETAIL : ", res.data);
+
           setDetailData(res.data);
           setLoading(false);
         }
@@ -74,10 +120,70 @@ export default function Page({}: PageProps) {
   }, [userData]);
 
   const handleClickStart = () => {
-    dispatch(setPopupTest({
-      show: true,
-    }))
-  }
+    dispatch(
+      setPopupTest({
+        show: true,
+      })
+    );
+  };
+
+  const testRemaining = (id_material: number) => {
+    if (typeof window !== "undefined") {
+      const session = atob(localStorage.getItem("testSession") ?? "");
+
+      if (session) {
+        const sessionData = JSON.parse(session);
+
+        if (id_material == parseInt(sessionData.id_material)) {
+
+          const isRunning =
+            new Date(sessionData.end_test).getTime() > new Date().getTime();
+
+          if (isRunning) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    }
+  };
+
+  const handleButtonSubtest = (id_material: number) => {
+    const status = statusMaterial.find(
+      (item) => item.id_material === id_material
+    );
+
+    const isCompleted = status?.isCompleted;
+
+    if (testRemaining(id_material)) {
+      return (
+        <Link
+          href={`/dashboard/tryout/test?id=${search}&subtest=${id_material}`}
+        >
+          <button className="text-white bg-custThird w-32 text-center px-5 py-1 cursor-pointer">
+            Continue
+          </button>
+        </Link>
+      );
+    }
+
+    return isCompleted ? (
+      <Link href={``}>
+        <button className="text-white bg-gray-400 w-32 text-center px-5 py-1 cursor-pointer">
+          Review
+        </button>
+      </Link>
+    ) : (
+      <Link
+        onClick={handleClickStart}
+        href={`/dashboard/tryout/detail?id=${search}&subtest=${id_material}`}
+        className="text-white bg-custPrimary w-32 text-center px-5 py-1 hover:underline"
+      >
+        Start
+      </Link>
+    );
+  };
 
   return (
     <>
@@ -166,13 +272,7 @@ export default function Page({}: PageProps) {
                         </p>
                       </div>
                       <div className="flex items-center pe-4">
-                        <Link
-                        onClick={handleClickStart}
-                          href={`/dashboard/tryout/detail?id=${search}&subtest=${item.id_material}`}
-                          className="text-white bg-custPrimary px-5 py-1 hover:underline"
-                        >
-                          Start
-                        </Link>
+                        {handleButtonSubtest(item.id_material)}
                       </div>
                     </div>
                   ))}

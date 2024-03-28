@@ -9,7 +9,7 @@ import CustErrorField from "../components/atoms/custErrorField";
 import CustButtonMenuMobile from "../components/atoms/custButtonMenuMobile";
 import FooterModule from "../components/molecules/footerModule";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { setPopup } from "../redux/slices/reduxPopUpSlices";
 import { setUserData } from "../redux/slices/reduxUserDataSlices";
@@ -23,6 +23,7 @@ export default function Page({}: PageProps) {
 
   const dispatch = useDispatch()
   const route = useRouter()
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getActiveUser = () => {
@@ -82,6 +83,7 @@ export default function Page({}: PageProps) {
   const user = useSelector((state:any) => state.userData.data)
 
   const onSubmit = async (data: any) => {
+    setLoading(true);
 
     const updateData = {
       username: data.username ? data.username : user.username,
@@ -98,6 +100,7 @@ export default function Page({}: PageProps) {
         show: true,
         type: "warning",
         onConfirm: () => {
+          setLoading(false);
           dispatch(setPopup({
             show: false,
           }));
@@ -110,8 +113,7 @@ export default function Page({}: PageProps) {
         show: true,
         type: "success",
         onConfirm: () => {
-          invalidateSession();
-          route.push("/");
+          setLoading(false);
           dispatch(setPopup({
             show: false,
           }));
@@ -176,7 +178,7 @@ export default function Page({}: PageProps) {
           className="bg-custPrimary mt-4 w-fit text-white text-sm font-semibold px-4 py-2 rounded-lg transition-all duration-150 hover:bg-custPrimary/70 hover:text-white"
           type="submit"
         >
-          Save Changes
+          {loading ? "load . . ." : "Save Changes"}
         </button>
       </form>
       <div className="mt-5">

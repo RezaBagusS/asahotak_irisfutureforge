@@ -93,3 +93,100 @@ VALUES
 (2, 5, 0),
 (2, 6, 0),
 (2, 7, 0);
+
+
+-- Answer Table
+INSERT INTO `Answer`(`answer`, `isTrue`, `id_soal`) 
+VALUES 
+('<p>0</p>','0','1'),
+('<p>1</p>','0','1'),
+('<p>2</p>','0','1'),
+('<p>3</p>','1','1'),
+('<p>4</p>','0','1'),
+
+('<p>11</p>','0','8'),
+('<p>12</p>','1','8'),
+('<p>13</p>','0','8'),
+('<p>14</p>','0','8'),
+('<p>15</p>','0','8'),
+
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(i), (ii), dan (iii)</span></p>','0','9'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(i) dan (iii)</span></p>','1','9'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(ii) dan (iv)</span></p>','0','9'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(iv)</span></p>','0','9'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">Semua pernyataan benar</span></p>','0','9'),
+
+('<p>1232</p>','1','10'),
+('<p>1223</p>','0','10'),
+('<p>1322</p>','0','10'),
+('<p>2132</p>','0','10'),
+('<p>2123</p>','0','10'),
+
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(i), (ii), dan (iii)</span></p>','0','11'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(i) dan (iii)</span></p>','0','11'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(ii) dan (iv)</span></p>','0','11'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(iv)</span></p>','1','11'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">Semua pernyataan benar</span></p>','0','11'),
+
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(i), (ii), dan (iii)</span></p>','0','12'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(i) dan (iii)</span></p>','1','12'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(ii) dan (iv)</span></p>','0','12'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(iv)</span></p>','0','12'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">Semua pernyataan benar</span></p>','0','12'),
+
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(i), (ii), dan (iii)</span></p>','0','13'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(i) dan (iii)</span></p>','0','13'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(ii) dan (iv)</span></p>','0','13'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(iv)</span></p>','0','13'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">Semua pernyataan benar</span></p>','1','13'),
+
+('<p>5</p>','0','14'),
+('<p>6</p>','0','14'),
+('<p>7</p>','0','14'),
+('<p>8</p>','1','14'),
+('<p>9</p>','0','14'),
+
+('<p>Kuantitas P lebih besar daripada Kuantitas Q</p>','1','15'),
+('<p>Kuantitas P lebih kecil daripada Kuantitas Q</p>','0','15'),
+('<p>Kuantitas P sama dengan Kuantitas Q</p>','0','15'),
+('<p>Hubungan antara P dan Q tidak dapat ditentukan</p>','0','15'),
+('<p>Tidak ada jawaban yang benar</p>','0','15'),
+
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(i), (ii), dan (iii)</span></p>','0','16'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(i) dan (iii)</span></p>','0','16'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(ii) dan (iv)</span></p>','0','16'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">(iv)</span></p>','0','16'),
+('<p><span style="font-size:12pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" id="isPasted">Semua pernyataan benar</span></p>','1','16'),
+
+('<p>Kuantitas P lebih besar daripada Kuantitas Q</p>','0','17'),
+('<p>Kuantitas P lebih kecil daripada Kuantitas Q</p>','0','17'),
+('<p>Kuantitas P sama dengan Kuantitas Q</p>','0','17'),
+('<p>Hubungan antara P dan Q tidak dapat ditentukan</p>','1','17'),
+('<p>Tidak ada jawaban yang benar</p>','0','17'),
+
+('<p>Pernyataan (i) saja cukup menjawab pertanyaan tetapi pernyataan (ii) saja tidak cukup</p>','0','18'),
+('<p>Pernyataan (ii) saja cukup menjawab pertanyaan tetapi pernyataan (i) saja tidak cukup</p>','1','18'),
+('<p>Dua pernyataan bersama-sama cukup untuk menjawab pertanyaan, tetapi satu pernyataan saja tidak cukup</p>','0','18'),
+('<p>Pernyataan (i) saja cukup menjawab pertanyaan dan pernyataan (ii) saja cukup menjawab pertanyaan</p>','0','18'),
+('<p>Dua pernyataan bersama-sama tidak cukup untuk menjawab pertanyaan</p>','0','18'),
+
+('<p>Toko Antik dan Budaya</p>','0','19'),
+('<p>Toko Budaya dan Cure</p>','0','19'),
+('<p>Toko Cure dan Dekorasi</p>','0','19'),
+('<p>Toko Dekorasi dan Ekonomi</p>','1','19'),
+('<p>Toko Ekonomi dan Antik</p>','0','19'),
+
+('<p>(3, 6)</p>','1','20'),
+('<p>(3, 7)</p>','0','20'),
+('<p>(3, 5)</p>','0','20'),
+('<p>(3, 4)</p>','0','20'),
+('<p>(3, 3)</p>','0','20'),
+
+('<p>1 : 3</p>','1','21'),
+('<p>3 : 1</p>','0','21'),
+('<p>1 : 2</p>','0','21'),
+('<p>2 : 1</p>','0','21'),
+('<p>1 : 4</p>','0','21'),
+
+
+

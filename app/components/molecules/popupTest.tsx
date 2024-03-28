@@ -1,6 +1,8 @@
 "use client";
 
+import { customLocalStorage, getUser } from "@/app/helpers/localStorage";
 import { getInfoTest } from "@/app/helpers/testHelpers";
+import { setPopup } from "@/app/redux/slices/reduxPopUpSlices";
 import { setPopupTest } from "@/app/redux/slices/reduxPopUpTestSlices";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -34,6 +36,7 @@ const PopupTest = () => {
   const userData = useSelector((state: any) => state.userData.data);
   const [dataInfoTest, setDataInfoTest] = useState<stateDataInfoTest>({});
   const [loading, setLoading] = useState(true);
+  const [redirect, setRedirect] = useState(false);
   const dispatch = useDispatch();
   const search = useSearchParams();
 
@@ -55,7 +58,7 @@ const PopupTest = () => {
           console.log(err);
         });
     }
-  }, [dataPopupTest]);
+  }, [dataPopupTest, idTryout, getSubtest, userData.id]);
 
   const handleCancel = () => {
     dispatch(
@@ -65,8 +68,30 @@ const PopupTest = () => {
     );
   };
 
-  const handleConfirm = () => {
-    // route.push(`/dashboard/tryout/test?id=${idMaterial}&subtest=${getSubtest}`);
+  const handleStart = () => {
+    dispatch(
+      setPopupTest({
+        show: false,
+      })
+    );
+    setRedirect(true);
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("dataSubmit", btoa([] as any));
+    }
+
+    const payloadTest = {
+      id_user: getUser().id,
+      id_tryout: parseInt(idTryout || "0"),
+      id_material: getSubtest,
+      start_test: new Date(),
+      end_test: new Date(
+        new Date().getTime() +
+          (dataInfoTest.userTO?.Tryout.Material[0].time ?? 0) * 60000
+      ),
+    };
+
+    customLocalStorage("testSession", btoa(JSON.stringify(payloadTest)));
   };
 
   return (
@@ -109,9 +134,10 @@ const PopupTest = () => {
                       siap, silahkan klik tombol &quot;Mulai Ujian&quot;.
                     </p>
                     <p>
-                      <strong>Perhatian: </strong> Anda tidak diperbolehkan
-                      meninggalkan halaman ujian sebelum ujian selesai. Pastikan
-                      jaringan internet anda aman ketika mengerjakan
+                      <strong>Perhatian: </strong> Disarankan gunakan device
+                      yang memiliki koneksi internet yang stabil dan gunakan
+                      browser terbaru untuk mengikuti ujian ini.{" "}
+                      <strong>(Disarankan menggunakan laptop)</strong>
                     </p>
                     <p>Selamat Mengerjakan !!</p>
                   </div>
@@ -125,9 +151,10 @@ const PopupTest = () => {
                   </button>
                   <Link
                     href={`/dashboard/tryout/test?id=${idTryout}&subtest=${getSubtest}`}
+                    onClick={handleStart}
                     className="text-white bg-custPrimary px-5 py-1 hover:underline"
                   >
-                    Mulai Ujian
+                    {redirect ? "Redirect . . ." : "Mulai Ujian"}
                   </Link>
                 </div>
               </div>
